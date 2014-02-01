@@ -7,11 +7,11 @@ from csrv.model import timing_phases
 
 
 class YesCard00055(actions.Action):
-  DESCRIPTION = 'Perform beta test'
+  DESCRIPTION = 'Perform installation of ice'
 
 
 class NoCard00055(actions.Action):
-  DESCRIPTION = 'No beta test'
+  DESCRIPTION = 'Do not perform installation of ice'
 
 
 class PerformCard00055(timing_phases.BasePhase):
