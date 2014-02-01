@@ -1,0 +1,288 @@
+html{
+  height: 100%;
+}
+
+body{
+  height: 100%;
+  background-color: gray;
+  overflow: hidden;
+}
+
+#heap,#stack,#runner_identity,#runner_credits,#runner_hand {
+  display: inline-block;
+}
+
+#heap {
+/*  position: absolute;
+  top: 0px;
+  left: 0px; */
+}
+
+#stack {
+/*  position: absolute;
+  top: 0px;
+  left: 200px; */
+}
+
+#runner_identity {
+/*  position: absolute;
+  top: 0px;
+  left: 400px; */
+}
+
+#rig {
+/*  position: absolute;
+  top: 20px;
+  left: 700px; */
+  display: inline-block;
+}
+
+#corp {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+#corp_identity {
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+#servers {
+  text-align: right;
+  vertical-align: bottom;
+  overflow: visible;
+  display: block;
+/*
+  position: absolute;
+  bottom: 50px;
+  right: 200px;*/
+}
+
+.hq .rnd .archives {
+  padding-bottom: 0px;
+}
+
+.server_cards .corp_card {
+  margin: 0 0 -30px -30px;
+}
+
+#corp_credits {
+  padding: 20px;
+  display: inline-block;
+}
+
+#corp_hand {
+  display: inline-block;`
+}
+
+.corp_static,.empty_remote,.no_root {
+  /*width: 100%;*/
+  padding: 10px;
+  display: inline-block;
+}
+
+/* Apply these styles to elements which should be card-sized */
+.large_card_size {
+  width: 200px;
+  height: 280px;
+}
+
+.medium_card_size {
+  width: 150px;
+  height: 210px;
+}
+
+.small_card_size {
+  width: 100px;
+  height: 140px;
+}
+
+.tiny_card_size {
+  width: 75px;
+  height: 105px;
+}
+
+
+#runner .card {
+  -webkit-transition: all .2s ease-in-out;
+  transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+}
+
+#rig .card img {
+  opacity: 0;
+}
+
+#rig .card:hover {
+  box-shadow: 5px 5px 2px black;
+  transform:rotate(0deg);
+  -webkit-transform:rotate(0deg);
+  transform:scale(2.0);
+  -ms-transform:scale(2.0); /* IE 9 */
+  -moz-transform:scale(2.0); /* Firefox */
+  -webkit-transform:scale(2.0); /* Safari and Chrome */
+  -o-transform:scale(2.0); /* Opera */
+}
+
+.runner_static {
+  /*width: 100%;*/
+  padding: 10px;
+  display: inline-block;
+}
+
+.runner_static img {
+  width: 150px;
+  height: 209px;
+}
+
+.corp_card {
+  /*width: 100%;*/
+  padding: 10px;
+  z-index: 10;
+  position: relative; /* allow z-index to work */
+  display: inline-block;
+}
+
+.corp_card:hover {
+  z-index: 20;
+}
+
+.card img {
+  position: relative;
+  display: inline-block;
+  width: 75px;
+  height: 105px;
+  box-shadow: 7px 7px 5px black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-transition: all .2s ease-in-out;
+}
+
+.corp_card img:hover {
+  transform:scale(2.0);
+  -ms-transform:scale(2.0); /* IE 9 */
+  -moz-transform:scale(2.0); /* Firefox */
+  -webkit-transform:scale(2.0); /* Safari and Chrome */
+  -o-transform:scale(2.0); /* Opera */
+}
+
+.unrezzed_corp_card {
+  position: relative;
+  z-index: 10;
+  text-align: left; /* cards don't line up with the background without this*/
+  padding: 0px;
+  margin: 0px;
+  height: 209px;
+  width: 150px;
+  -webkit-transition: all .2s ease-in-out;
+  box-shadow: 7px 7px 5px black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+}
+
+.unrezzed_corp_card:hover {
+  z-index: 20;
+  transform:scale(2.0);
+  -ms-transform:scale(2.0); /* IE 9 */
+  -moz-transform:scale(2.0); /* Firefox */
+  -webkit-transform:scale(2.0); /* Safari and Chrome */
+  -o-transform:scale(2.0); /* Opera */
+}
+
+.unrezzed_corp_card img {
+  width: 150px;
+  height: 209px;
+  display: block;
+  line-height: 0;
+}
+
+.unrezzed_corp_card img:hover {
+  opacity: 0.15;
+}
+
+.unrezzed_corp_card img:active {
+  opacity: 0.15;
+}
+
+.ice:hover, .server_ice .unrezzed:hover {
+  z-index: 20;
+  transform:rotate(0deg);
+  -webkit-transform:rotate(0deg); /* Safari */
+  transform:scale(2.0);
+  -ms-transform:scale(2.0); /* IE 9 */
+  -moz-transform:scale(2.0); /* Firefox */
+  -webkit-transform:scale(2.0); /* Safari and Chrome */
+  -o-transform:scale(2.0); /* Opera */
+  box-shadow: 7px 7px 5px black;
+}
+
+.server_ice .unrezzed img:hover {
+  opacity: 0.15;
+}
+
+#hand img {
+  opacity: 0;
+}
+
+.ice:active {
+  transform:rotate(0deg);
+  -webkit-transform:rotate(0deg); /* Safari */
+}
+
+.ice img {
+  width: 150px;
+  height: 209px;
+  display: block;
+  line-height: 0;
+}
+
+.ice img:hover {
+  opacity: 0.15;
+}
+
+.ice img:active {
+  opacity: 0.15;
+}
+
+
+#overlay {
+    display: none;
+    position: fixed;
+    text-align: center;
+    left: 25%;
+    top: 25%;
+    padding: 25px;
+    border: 2px solid black;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    z-index: 600;
+}
+
+#overlay img {
+  height: 100%;
+  width: 100%;
+}
+
+#fade {
+    display: none;
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    background-color: black;
+    -moz-opacity: 0.3;
+    opacity: .30;
+    filter: alpha(opacity=30);
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+}
+
+.server_installed {
+  position: relative;
+}
+

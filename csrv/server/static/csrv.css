@@ -1,0 +1,428 @@
+#game {
+  perspective: 150;
+  -webkit-perspective: 4000;
+  -webkit-perspective-origin: 60% 0%; /* Safari and Chrome */
+  overflow: hidden;
+  position: absolute;
+  left: 250px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+
+#accessed_cards {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  padding: 10px;
+  border: 2px solid black;
+  -webkit-border-radius: 10px;
+  -mox-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  z-index: 200;
+}
+
+#dialog {
+/*  position: fixed; */
+  z-index: 1100;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+.ui-dialog {
+  max-width: 80%;
+  max-height: 80%;
+  z-index: 1100;
+}
+
+#card_browser {
+  display: none;
+/*  position: fixed;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  min-width: 30%;
+  min-height: 30%;
+  */
+  max-width: 80%;
+  max-height: 80%;
+  /*
+  padding: 10px;
+  border: 2px solid black;
+  -webkit-border-radius: 10px;
+  -mox-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #ffffff; */
+  z-index: 1100;
+}
+
+#card_browser .card-list {
+  display: block;
+  background: rgba(0, 0, 0, .05);
+  padding: 10px;
+  overflow-y: scroll;
+  min-height: 110px
+  max-height: 70%;
+}
+
+#card_browser .card.chosen:after {
+  position: absolute;
+  border: 4px solid red;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  top: -5px;
+  left: -5px;
+  content: "";
+  display: inline-block;
+  width: 85px;
+  height: 110px;
+}
+
+#card_browser .card {
+  margin: 10px;
+}
+
+#info_bar {
+  background: rgba(254, 254, 254, .5);
+  position: absolute;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  font-size: 75%;
+  display: block;
+  width: 250px;
+  height: 100%;
+  z-index: 1000;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+}
+
+.server .runme {
+  display: none;
+  background: rgba(0, 0, 0, .5);
+  border: 1px solid white;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  left: 0px;
+  right: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.server .runme img {
+  transform:rotate(180deg);
+  -webkit-transform:rotate(180deg); /* Safari */
+  width: 50px;
+  height: 50px;
+  left: 0px;
+  right: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#card_viewer {
+  position: fixed;
+  display: none;
+  z-index: 1000;
+  top: 0px;
+  right: 0px;
+  width: 220px;
+  height: 315px;
+  margin: 15px;
+  border: 1px solid black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#card_viewer img {
+  width: 100%;
+  height: 100%;
+}
+
+#corp_info, #runner_info {
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  font-size: 100%;
+  color: white;
+}
+
+#corp_info div, #runner_info div {
+  display: inline-block;
+  padding: 5px;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  font-size: 100%;
+  color: white;
+  border: 1px solid white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#corp_info img, #runner_info img {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+}
+
+#corp_info {
+  background: rgba(127, 123, 233, .2);
+}
+#runner_info {
+  background: rgba(201, 18, 18, .2);
+}
+
+#corp_hud, #runner_hud {
+  position: fixed;
+  bottom: -75px;
+  left: 250px;
+  -webkit-transition: all .2s ease-in-out;
+
+  background: rgba(254, 254, 254, .5);
+  padding: 10px;
+  margin: 5px;
+
+  border: 2px solid black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+
+}
+
+#corp_hud:hover, #runner_hud:hover {
+  position: fixed;
+  bottom: 0px;
+}
+
+#choices {
+  /*position: fixed;*/
+  display: block;
+  background: #47a3da;
+  padding: 5px;
+  margin: 5px;
+
+  border: 2px solid black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#choices .click, #choices .credit {
+  width: 15px;
+  height: 15px;
+}
+
+#choices h3 {
+  color: #fff;
+  display: block;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#choices a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  padding: 1em;
+  border-bottom: 1px solid #258ecd;
+}
+
+#choices a:hover {
+  background: #258ecd;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(65,65,65,0.8);
+    -webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0.7);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(65,65,65,0.4);
+}
+
+#messages {
+  display: block;
+  height: 200px;
+  overflow-y: scroll;
+
+  font-family: 'Share Tech Mono', sans-serif;
+  font-size: 100%;
+  background: #000;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  border: 2px solid white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#messages p {
+  margin: 0px;
+}
+
+#board {
+  width: 100%;
+  height: 100%;
+  transform: rotateX(40deg);
+  -webkit-transform: rotateX(45deg); /* Safari and Chrome */
+  background: url('/static/images/Pdas_wallpapers_176.jpg');
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+
+#runner_area {
+  display: inline-block;
+}
+
+.ui-tooltip {
+  text-decoration: none;
+  color: #fff;
+  background: #47a3da;
+}
+
+.card {
+  margin: 3px auto;
+  display: inline-block;
+  position: relative;
+  z-index: 10;
+  -webkit-transition: all .2s ease-in-out;
+}
+
+.placeholder {
+  width: 75px;
+  height: 105px;
+}
+
+.card img {
+  position: relative;
+  display: inline-block;
+  width: 75px;
+  height: 105px;
+  box-shadow: 7px 7px 5px black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-transition: all .1s ease-in-out;
+}
+
+.card_old:hover {
+  z-index: 20;
+  transform:scale(2.5);
+  -ms-transform:scale(2.5); /* IE 9 */
+  -moz-transform:scale(2.5); /* Firefox */
+  -webkit-transform:scale(2.5); /* Safari and Chrome */
+  -o-transform:scale(2.5); /* Opera */
+}
+
+.card.hilight {
+  border: 1px solid black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+  -moz-box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+  box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+}
+
+.corp_static img, .empty_remote img, .no_root img {
+  width: 75px;
+  height: 105px;
+}
+
+.server {
+  display: inline-block;
+  margin: 15px;
+  vertical-align: bottom;
+  text-align: center;
+}
+
+.server.run {
+  background: rgba(201, 18, 18, .5);
+}
+
+.server_ice .card {
+  position: relative;
+  z-index: 10;
+  text-align: left; /* cards don't line up with the background without this*/
+  padding: 0px;
+  /*height: 209px;
+  width: 150px;*/
+  -webkit-transition: all .2s ease-in-out;
+  transform:rotate(90deg);
+  -webkit-transform:rotate(90deg); /* Safari */
+  /*box-shadow: 7px -7px 5px black;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;*/
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.server_ice .card.run:after {
+  position: absolute;
+  border: 4px solid red;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;*/
+  margin: -3px -5px 0px -3px;
+  top: 0px;
+  left: 0px;
+  content: "";
+  display: block;
+  width: 85px;
+  height: 110px;
+}
+
+.card .token img {
+  box-shadow: 2px 2px 2px black;
+}
+.card .token img.advancement, .card .token img.credit {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.card .token img.virus_counter {
+  width: 15px;
+  height: 15px;
+}
+
+#rig .card .token img {
+  opacity: 1.0;
+}
+
+div.token {
+  z-index: 15;
+  position: absolute;
+  display: inline-block;
+  left: 0px;
+  width: 100%
+  height: 100%;
+  padding: 5px;
+}
