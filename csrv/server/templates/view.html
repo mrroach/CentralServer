@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="en-US" class="animation-enabled animation-effects-enabled">
+<head>
+    <title>Central Server</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="HandheldFriendly" content="true" />
+    <link rel="stylesheet" type="text/css"
+      href="/static/ui-lightness/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" type="text/css"
+      href="/static/jquery.contextMenu.css" />
+    <link href='http://fonts.googleapis.com/css?family=Share+Tech+Mono'
+      rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/static/csrv.css" />
+    {% block head %}
+    {% end %}
+
+</head>
+<body>
+  <script type="text/javascript"
+      src="/static/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript"
+    src="/static/jquery-ui-1.10.3.custom.min.js"></script>
+  <script type="text/javascript" src="/static/jquery.ui.position.js"></script>
+  <script type="text/javascript"
+          src="/static/jquery.contextMenu.js"></script>
+  <script type="text/javascript" src="/static/csrv.js"></script>
+  <script type="text/javascript" src="/static/csrv.model.js"></script>
+  <script type="text/javascript" src="/static/csrv.model.card.js"></script>
+  <script type="text/javascript"
+          src="/static/csrv.model.card_browser.js"></script>
+  <script type="text/javascript" src="/static/csrv.model.choices.js"></script>
+  <script type="text/javascript">
+
+    csrv.gameId = "{{game_id}}";
+    csrv.side = "{{side}}";
+    csrv.baseUrl = "/game/{{game_id}}/{{side}}";
+    csrv.xsrf = "{{ xsrf_token }}";
+    $(document).ready(function() {
+      csrv.init();
+    });
+  </script>
+
+    <div id="overlay" class="ui-widget-content"></div>
+    <div id="fade"></div>
+    <div id="card_browser"></div>
+    <div id="dialog"></div>
+    <div id="archives_access"></div>
+    <div id="accessed_cards"></div>
+    <div id="card_viewer"></div>
+    <div id="info_bar">
+      <div id="runner_info">
+        <h3>Runner Info</h3>
+        <div class="clicks" title="Clicks remaining this turn"></div>
+        <div class="credits" title="Credits in the main credit pool"></div>
+        <div class="hand_size" title="Number of cards in hand"></div>
+        <div class="memory" title="Amount of memory free"></div>
+        <div class="link" title="Link value"></div>
+        <div class="tags" title="Number of tags"></div>
+        <div class="brain_damage" title="Amount of brain damage"></div>
+        <div class="agendas" title="Scored agenda points"></div>
+      </div>
+      <div id="corp_info">
+        <h3>Corp Info</h3>
+        <div class="clicks" title="Clicks remaining this turn"></div>
+        <div class="credits" title="Credits in the main credit pool"></div>
+        <div class="hand_size" title="Number of cards in hand"></div>
+        <div class="bad_publicity" title="Amount of bad publicity"></div>
+        <div class="agendas" title="Scored agenda points"></div>
+      </div>
+      <div id="messages"></div>
+      <div id="fastmode">Fast Mode Enabled</div>
+      <div id="choices"></div>
+    </div>
+    <div id="game">
+    <div id="board">
+      {% block board %}
+        <div id="runner">
+            <div id="runner_area">
+                <div id="heap"></div>
+                <div id="stack"></div>
+                <div id="runner_identity"></div>
+                <div id="runner_credits"></div>
+                <div id="runner_hand"></div>
+            </div>
+            <div id="rig"></div>
+        </div>
+        <div id="corp">
+            <div id="servers">
+            </div>
+          </div>
+      {% end %}
+    </div>
+  </div>
+
+  {% block hud %}
+    <div id="corp_hud">
+      <div id="corp_hand"></div>
+      <div id="corp_credits"></div>
+      <div id="options">
+        <input type="checkbox" id="opt_skip_abilities">
+        <label for="opt_skip_abilities">Skip abilities/rez phase</label>
+      </div>
+    </div>
+  {% end %}
+
+</body>
+
+</html>

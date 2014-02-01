@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Choose your corp deck</title>
+  </head>
+  <body>
+    <form action="/game/{{game_id}}/{{side}}/deck" method="post"
+      enctype="multipart/form-data">
+      {% module xsrf_form_html() %}
+      <p><h3>Upload a .o8d file</h3>
+        <input type="file" name="file" id="file">
+        <input type="submit" value="next">
+      </p>
+      <p><h3>Use a premade deck</h3>
+      <select name="premade" id="premade">
+      {% for i, deck in enumerate(decks) %}
+      <option value="{{i}}">{{deck['name']}}</option>
+      {% end %}
+    </select>
+    <input type="submit">
+      </p>
+    </form>
+  </body>
+</html>

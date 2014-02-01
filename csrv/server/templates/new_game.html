@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>New Game</title>
+  </head>
+  <body>
+    <h2>Pick a side</h2>
+    {% for error in errors %}
+    <p class="error">{{ error }}</p>
+    {% end %}
+    <form action="/game/new" method="post">
+      {% module xsrf_form_html() %}
+      <p>
+        <label for="corp">Corp</label>
+        <input type="radio" id="corp" name="side" value="corp">
+      </p>
+      <p>
+        <label for="runner">Runner</label>
+        <input type="radio" id="runner" name="side" value="runner">
+      </p>
+      <input type="submit" value="next">
+    </form>
+  </body>
+</html>

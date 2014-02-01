@@ -1,0 +1,29 @@
+{% extends "view.html" %}
+  {% block head %}
+  <link rel="stylesheet" type="text/css" href="/static/csrv_runner.css" />
+  {% end %}
+  {% block board %}
+    <div id="corp">
+        <div id="servers"></div>
+    </div>
+    <div id="runner">
+        <div id="rig"></div>
+        <div id="runner_area">
+            <div id="runner_identity"></div>
+            <div id="stack"></div>
+            <div id="heap"></div>
+        </div>
+      </div>
+  {% end %}
+
+  {% block hud %}
+    <div id="runner_hud">
+      <div id="hand"></div>
+      <div id="credits"></div>
+      <div id="options">
+        <input type="checkbox" id="opt_skip_abilities">
+        <label for="opt_skip_abilities">
+          Skip abilities/rez phase till turn/run</label>
+      </div>
+    </div>
+  {% end %}

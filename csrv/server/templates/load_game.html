@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Load a saved game</title>
+  </head>
+  <body>
+    <form action="/game/load" method="post"
+      enctype="multipart/form-data">
+      {% module xsrf_form_html() %}
+      <p><h3>Upload a pickle file</h3>
+        <input type="file" name="pickle" id="pickle">
+      </p>
+      <p>
+        <label for="corp">Corp</label>
+        <input type="radio" id="corp" name="side" value="corp">
+      </p>
+      <p>
+        <label for="runner">Runner</label>
+        <input type="radio" id="runner" name="side" value="runner">
+      </p>
+      <input type="submit" value="next">
+    </form>
+  </body>
+</html>
