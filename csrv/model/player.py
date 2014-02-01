@@ -7,7 +7,6 @@ from csrv.model import game_object
 from csrv.model import locations
 from csrv.model import modifiers
 from csrv.model import pool
-from csrv.model import turn
 
 
 class Player(game_object.GameObject):

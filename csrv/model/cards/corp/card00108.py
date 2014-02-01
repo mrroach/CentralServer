@@ -25,7 +25,8 @@ class Card00108(asset.Asset):
   def build_actions(self):
     asset.Asset.build_actions(self)
     self._gain_credits_ability = actions.CardClickAbility(
-          self.game, self.player, self, self.TEXT, 'gain_credits',
+        self.game, self.player, self,
+        '[Click],[Click],[Click]: Gain 7[Credits]', 'gain_credits',
           cost=cost.SimpleCost(self.game, self.player, clicks=3))
 
   def gain_credits_actions(self):
