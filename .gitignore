@@ -37,8 +37,9 @@ nosetests.xml
 
 # Backup files
 *.bak
+game_state.json
 
-# Bootstrapped virtial env files
+# Bootstrapped virtualenv files
 csrv-bootstrap.py
 include/*
 .Python
