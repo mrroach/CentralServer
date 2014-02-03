@@ -15,16 +15,13 @@ csrv.Card = function() {
 
 csrv.Card.prototype.update = function(cardState) {
   if (this.gameId && this.gameId != cardState['game_id']) {
-    // wtf?
+    // card gameId doesnt match registry - wtf?
     delete csrv.gameRegistry[this.gameId];
   }
   this.gameId = cardState['game_id'];
-  self = this;
-  csrv.gameRegistry[this.gameId] = self;
-
   this.set = cardState['set'];
   this.number = cardState['number'];
-  this.name = cardState['name'];
+  this.name = csrv.game.localization.cards[cardState['name']] || cardState['name'];
   this.isFaceup = cardState['is_faceup'];
   this.isRezzed = cardState['is_rezzed'];
   this.advancementTokens = cardState['advancement_tokens'];
@@ -34,6 +31,10 @@ csrv.Card.prototype.update = function(cardState) {
   this.activeRun = false;
   this.host = cardState['host'];
   this.hostedCards = cardState['hosted_cards'] || [];
+
+  // Save to the game registry
+  self = this;
+  csrv.gameRegistry[this.gameId] = self;
 };
 
 csrv.Card.prototype.imagePath = function() {

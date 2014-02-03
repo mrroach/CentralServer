@@ -16,6 +16,9 @@ csrv.Game = function(gameState) {
   this.corp = new csrv.Corp();
   this.choices = new csrv.Choices(this);
   this.run = new csrv.Run();
+  this.localization = new csrv.CardLocalization();
+  // TODO: Remove this next line when done debugging and go to live server
+  this.localization.loadFile('/static/csrv_localization.json');
 };
 
 /**
