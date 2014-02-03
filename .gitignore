@@ -35,12 +35,15 @@ nosetests.xml
 .project
 .pydevproject
 
+# Backup files
+*.bak
+
 # Bootstrapped virtial env files
 csrv-bootstrap.py
 include/*
 .Python
 
-# ignore scanned images and FFG images
+# ignore scanned images and FFG assets
 csrv/server/static/images/[0-9][0-9][0-9][0-9][0-9].png
 csrv/server/static/images/corp-back.jpg
 csrv/server/static/images/runner-back.jpg
@@ -50,3 +53,4 @@ csrv/server/static/images/advancement.png
 csrv/server/static/images/corp-empty.jpg
 csrv/server/static/images/credit_token.png
 csrv/server/static/images/virus_counter.png
+csrv/server/static/csrv_localization.json

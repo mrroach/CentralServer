@@ -16,6 +16,7 @@ csrv.Game = function(gameState) {
   this.corp = new csrv.Corp();
   this.choices = new csrv.Choices(this);
   this.run = new csrv.Run();
+  this.localization = new csrv.CardLocalization();
 };
 
 /**

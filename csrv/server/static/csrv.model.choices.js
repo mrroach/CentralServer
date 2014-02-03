@@ -236,6 +236,12 @@ csrv.Choice.prototype.descriptionHtml = function() {
       src: '/static/images/click.png'});
     html = html.replace(/\[[cC]lick\]/, cred[0].outerHTML);
   }
+  if (md = this.description.match(/(Card\d{5})/)) {
+    var cardName = csrv.game.localization.cards[md[1]];
+    if (cardName) {
+      html = html.replace(/Card\d{5}/, cardName);
+    }
+  }
 
   return html
 }
