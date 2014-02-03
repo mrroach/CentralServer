@@ -75,7 +75,15 @@ csrv.updateState = function(evt) {
 csrv.showMessages = function() {
   var messages = $('#messages')[0];
   for (var i = 0; i < csrv.log['log'].length; i++) {
-    var message = $('<p>', {text: '> ' + csrv.log['log'][i]['message']});
+    var msgText = csrv.log['log'][i]['message'];
+    if (md = msgText.match(/(Card\d{5})/)) {
+      var cardName = csrv.game.localization.cards[md[1]];
+      if (cardName) {
+        msgText = msgText.replace(/Card\d{5}/, cardName);
+      }
+    }
+
+    var message = $('<p>', {text: '> ' + msgText});
     message.css('display', 'none');
     $(messages).append(message);
     message.fadeIn('slow');
