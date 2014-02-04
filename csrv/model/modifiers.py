@@ -1,6 +1,7 @@
 """Modifications to strength, cost, advancement requirement, etc."""
 
 import collections
+from functools import wraps
 from csrv.model import game_object
 from csrv.model import events
 
@@ -20,6 +21,29 @@ class ModifierScopes(object):
     self.global_scope = set()
     self.server_scope = collections.defaultdict(set)
     self.card_scope = collections.defaultdict(set)
+
+
+def modifiable(modifier_class, card_scope=True,
+               server_scope=True, global_scope=True):
+  """A decorator to allow easy creation of modified properties."""
+
+  def wrap_method(method):
+    @wraps(method)
+    def wrapper(self):
+      value = method(self)
+      if card_scope:
+        for mod in self.game.modifiers[modifier_class].card_scope[self]:
+          value += mod.value
+      if server_scope:
+        for mod in self.game.modifiers[
+            modifier_class].server_scope[self.location.parent]:
+          value += mod.value
+      if global_scope:
+        for mod in self.game.modifiers[modifier_class].global_scope:
+          value += mod.value
+      return value
+    return wrapper
+  return wrap_method
 
 
 class Modifier(game_object.GameObject):

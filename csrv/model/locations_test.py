@@ -3,34 +3,11 @@ from csrv.model import deck
 from csrv.model import events
 from csrv.model import game
 from csrv.model import modifiers
+from csrv.model import test_base
 
 
-class TestLocation(unittest.TestCase):
-
-  def setUp(self):
-    self.corp_deck = deck.CorpDeck(
-        'Haas-Bioroid: Engineering the Future',
-        ['Adonis Campaign',
-         'Adonis Campaign',
-         'Adonis Campaign',
-         'Hedge Fund',
-         'Hedge Fund',
-         'Hedge Fund',
-         'Accelerated Beta Test',
-         'Accelerated Beta Test',
-         'Accelerated Beta Test',
-         'Melange Mining Corp.',
-         'Melange Mining Corp.',
-         'Melange Mining Corp.'])
-    self.runner_deck = deck.RunnerDeck(
-        'Noise: Hacker Extraordinaire',
-        ['Sure Gamble',
-         'Yog.0',
-         'Mimic',
-         'Magnum Opus',
-         'Armitage Codebusting',
-        ])
-    self.game = game.Game(self.corp_deck, self.runner_deck)
+class TestLocation(test_base.TestBase):
+  pass
 
 
 class TestHQ(TestLocation):

@@ -1,7 +1,6 @@
 import unittest
 from csrv.model import events
 from csrv.model import pool
-from csrv.model import turn
 
 
 class TestPool(unittest.TestCase):

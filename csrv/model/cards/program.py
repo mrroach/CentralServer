@@ -24,26 +24,14 @@ class Program(card_base.CardBase):
   HOST_ON = []
 
   @property
+  @modifiers.modifiable(modifiers.ProgramStrengthModifier, server_scope=False)
   def strength(self):
-    strength = self.STRENGTH
-    for mod in self.game.modifiers[
-        modifiers.ProgramStrengthModifier].card_scope[self]:
-        strength += mod.value
-    for mod in self.game.modifiers[
-        modifiers.ProgramStrengthModifier].global_scope:
-        strength += mod.value
-    return strength
+    return self.STRENGTH
 
   @property
+  @modifiers.modifiable(modifiers.ProgramCostModifier, server_scope=False)
   def cost(self):
-    cost = self.COST
-    for mod in self.game.modifiers[
-        modifiers.ProgramCostModifier].card_scope[self]:
-        cost += mod.value
-    for mod in self.game.modifiers[
-        modifiers.ProgramCostModifier].global_scope:
-        cost += mod.value
-    return cost
+    return self.COST
 
   def build_actions(self):
     self.install_action = actions.InstallProgram(self.game, self.player, self)

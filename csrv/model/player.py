@@ -135,25 +135,22 @@ class RunnerPlayer(Player):
     return self.memory - used
 
   @property
+  @modifiers.modifiable(modifiers.MemorySize,
+                        card_scope=False, server_scope=False)
   def memory(self):
-    total = 4
-    for mod in self.game.modifiers[modifiers.MemorySize].global_scope:
-      total += mod.value
-    return total
+    return 4
 
   @property
+  @modifiers.modifiable(modifiers.RunnerMaxHandSize,
+                        card_scope=False, server_scope=False)
   def max_hand_size(self):
-    total = 5
-    for mod in self.game.modifiers[modifiers.RunnerMaxHandSize].global_scope:
-      total += mod.value
-    return total
+    return 5
 
   @property
+  @modifiers.modifiable(modifiers.RunnerStartingHandSize,
+                        card_scope=False, server_scope=False)
   def starting_hand_size(self):
-    total = 5
-    for mod in self.game.modifiers[modifiers.RunnerStartingHandSize].global_scope:
-      total += mod.value
-    return total
+    return 5
 
   def get_brain_damage(self):
     return self._brain_damage
@@ -252,18 +249,16 @@ class CorpPlayer(Player):
     self.archives.add(card)
 
   @property
+  @modifiers.modifiable(modifiers.CorpMaxHandSize,
+                        card_scope=False, server_scope=False)
   def max_hand_size(self):
-    total = 5
-    for mod in self.game.modifiers[modifiers.CorpMaxHandSize].global_scope:
-      total += mod.value
-    return total
+    return 5
 
   @property
+  @modifiers.modifiable(modifiers.CorpStartingHandSize,
+                        card_scope=False, server_scope=False)
   def starting_hand_size(self):
-    total = 5
-    for mod in self.game.modifiers[modifiers.CorpStartingHandSize].global_scope:
-      total += mod.value
-    return total
+    return 5
 
   def get_bad_publicity(self):
     return self._bad_publicity

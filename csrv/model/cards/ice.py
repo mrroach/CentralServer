@@ -32,34 +32,14 @@ class Ice(card_base.CardBase):
     self.subroutines = []
 
   @property
+  @modifiers.modifiable(modifiers.IceStrengthModifier)
   def strength(self):
-    strength = self.STRENGTH
-    for mod in self.game.modifiers[
-        modifiers.IceStrengthModifier].card_scope[self]:
-        strength += mod.value
-    for mod in self.game.modifiers[
-        modifiers.IceStrengthModifier].global_scope:
-        strength += mod.value
-    if self.is_installed:
-      for mod in self.game.modifiers[
-          modifiers.IceStrengthModifier].server_scope[self.location.parent]:
-        strength += mod.value
-    return strength
+    return self.STRENGTH
 
   @property
+  @modifiers.modifiable(modifiers.IceRezCostModifier)
   def cost(self):
-    cost = self.COST
-    for mod in self.game.modifiers[
-        modifiers.IceRezCostModifier].card_scope[self]:
-        cost += mod.value
-    for mod in self.game.modifiers[
-        modifiers.IceRezCostModifier].global_scope:
-        cost += mod.value
-    if self.is_installed:
-      for mod in self.game.modifiers[
-          modifiers.IceRezCostModifier].server_scope[self.location.parent]:
-        strength += mod.value
-    return cost
+    return self.COST
 
   def build_actions(self):
     self.install_action = actions.InstallIce(self.game, self.player, self)
