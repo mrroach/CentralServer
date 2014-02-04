@@ -39,7 +39,7 @@ csrv.Card.prototype.update = function(cardState) {
 
 csrv.Card.prototype.imagePath = function() {
   if (this.set != null && this.number != null) {
-    return '/static/images/' + csrv.zeroPad(this.set + 1, 2) +
+    return '/static/images/' + csrv.zeroPad(this.set, 2) +
       csrv.zeroPad(this.number, 3) + '.png';
   }
   return null;

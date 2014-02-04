@@ -1,10 +1,10 @@
 """Constants for card information."""
 
 # Card sets
-CORE = 0
-GENESIS = 1
-CREATION_AND_CONTROL = 2
-SPIN_CYCLE = 3
+CORE = 1
+GENESIS = 2
+CREATION_AND_CONTROL = 3
+SPIN_CYCLE = 4
 
 # Sides
 CORP = 0
