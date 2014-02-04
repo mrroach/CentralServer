@@ -479,6 +479,10 @@ csrv.InstallProgramResponseHandler = function(choice) {
   this.host = null;
   this.hasHost = false;
   this.hostChoices = [];
+
+  this.toTrash = [];
+  this.hasTrash = false;
+  this.trashChoices = [];
   this.checkResponse();
 };
 csrv.InstallProgramResponseHandler.prototype = new csrv.ChoiceHandler();
@@ -494,11 +498,21 @@ csrv.InstallProgramResponseHandler.prototype.checkResponse = function() {
       this.hasHost = true;
     }
   }
-  if (this.hasHost) {
+  if (this.hasHost && !this.hasTrash) {
+    if (this.choice.validResponseOptions['programs_to_trash'].length) {
+      this.clearChoices();
+      this.showTrashChoices(
+          this.choice.validResponseOptions['programs_to_trash']);
+    } else {
+      this.hasTrash = true;
+    }
+  }
+  if (this.hasHost && this.hasTrash) {
     var response = {
       response_type: this.responseType,
       response_data: {
-        host: this.host
+        host: this.host,
+        programs_to_trash: this.toTrash
       }
     };
     csrv.sendChoice(this.choiceIndex, response);
@@ -525,8 +539,57 @@ csrv.InstallProgramResponseHandler.prototype.showHostChoices = function(hosts) {
 
   choiceDiv.append($('<h3>', {text: 'Choose a host'}));
   var link = $('<a>', {href: '#', html: 'No host'});
-  link.click(new csrv.ResponseChoice(self.setHostChoice, null));
+  var choice = new csrv.ResponseChoice(
+      'No host', this.setHostChoice.bind(this), null);
+  link.click(function() { choice.resolve() });
   choiceDiv.append(link);
+};
+
+csrv.InstallProgramResponseHandler.prototype.showTrashChoices =
+    function(targets) {
+  var choiceDiv = $('#choices');
+  csrv.destroyTooltip();
+  /* need to give the option to unselect accidentally selected programs here **/
+  /* also add a visual trash indicator to the selected card */
+  for (var i = 0; i < targets.length; i++) {
+    var target = csrv.gameRegistry[targets[i]];
+    if (target) {
+      var choice = new csrv.ResponseChoice(
+          'Trash ' + target.name,
+          this.addTrashChoice.bind(this), targets[i]);
+      this.trashChoices.push(choice);
+      target.clearChoices();
+      target.addChoice(choice);
+      target.render();
+    }
+  }
+  csrv.createTooltip();
+  choiceDiv.append($('<h3>', {text: 'Choose to trash programs'}));
+  var link = $('<a>', {href: '#', html: 'Done trashing'});
+  var self = this;
+  var choice = new csrv.ResponseChoice(
+      'Done trashing', this.addTrashChoice.bind(this), null);
+  link.click(function() { choice.resolve(); });
+  choiceDiv.append(link);
+};
+
+csrv.InstallProgramResponseHandler.prototype.addTrashChoice = function(cardId) {
+
+  console.log('Setting hasTrash');
+  if (!cardId) {
+    this.hasTrash = true;
+  } else {
+    this.toTrash.push(cardId);
+  }
+
+  for (var i = 0; i < this.trashChoices.length; i++) {
+    var choice = this.trashChoices[i];
+    var card = csrv.gameRegistry[choice.value];
+    if (card) {
+      card.removeChoice(choice);
+    }
+  }
+  this.checkResponse();
 };
 
 csrv.InstallProgramResponseHandler.prototype.setHostChoice = function(hostId) {
@@ -621,6 +684,7 @@ csrv.ResponseChoice = function(description, callback, value) {
 csrv.ResponseChoice.prototype.descriptionHtml = function() {
   return this.description;
 };
+
 csrv.ResponseChoice.prototype.resolve = function() {
   this.callback(this.value);
 };
