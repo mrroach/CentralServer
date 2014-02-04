@@ -28,5 +28,5 @@ class Card00001(identity.Identity):
     if card_info.VIRUS in sender.KEYWORDS:
       self.game.corp.rnd.pop().trash()  # lulz
       self.log('The corp trashes the top card of R&D '
-               'because Noise installed a virus')
+               'because the runner installed a virus')
 
