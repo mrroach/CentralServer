@@ -28,18 +28,9 @@ class Agenda(installable_card.InstallableCard):
   }
 
   @property
+  @modifiers.modifiable(modifiers.AgendaAdvancementRequirement)
   def advancement_requirement(self):
-    requirement = self.ADVANCEMENT_REQUIREMENT
-    for mod in self.game.modifiers[
-        modifiers.AgendaAdvancementRequirement].card_scope[self]:
-      requirement += mod.value
-    for mod in self.game.modifiers[
-        modifiers.AgendaAdvancementRequirement].global_scope:
-      requirement += mod.value
-    for mod in self.game.modifiers[
-        modifiers.AgendaAdvancementRequirement].server_scope[self.location.parent]:
-      requirement += mod.value
-    return requirement
+    return self.ADVANCEMENT_REQUIREMENT
 
   @property
   def agenda_points(self):
@@ -57,15 +48,9 @@ class Agenda(installable_card.InstallableCard):
     self._steal_action = actions.StealAgenda(self.game, self.game.runner, self)
 
   @property
+  @modifiers.modifiable(modifiers.StealAgendaCost)
   def steal_cost(self):
-    cost_mod = 0
-    for mod in self.game.modifiers[
-        modifiers.StealAgendaCost].server_scope[self.location.parent]:
-      cost_mod += mod.value
-    for mod in self.game.modifiers[
-        modifiers.StealAgendaCost].global_scope:
-      cost_mod += mod.value
-    return cost_mod
+    return 0
 
   def installed_actions(self):
     return [self._advance_action]
