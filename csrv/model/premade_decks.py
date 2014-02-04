@@ -4,9 +4,9 @@ corp_decks = [
      'cards': [
          'Card01058',
          'Card01058',
-         'Card0159',
-         'Card0159',
-         'Card0159',
+         'Card01059',
+         'Card01059',
+         'Card01059',
          'Card01110',
          'Card01110',
          'Card01110',
