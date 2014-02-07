@@ -42,7 +42,7 @@ class Card01051(program.Program):
 
   def interact_with_ice_actions(self):
     return ([self._boost_strength_action] +
-        [actions.Card01051BreakSubroutine(
+        [actions.AiBreakSubroutine(
             self.game, self.player, self, sub)
          for sub in self.game.run.current_ice().subroutines])
 
