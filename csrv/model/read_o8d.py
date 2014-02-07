@@ -16,5 +16,6 @@ def read(filedata):
       dest = cards
     for card in section.getchildren():
       for i in range(int(card.get('qty'))):
-        dest.append(card.text)
+        # Read the last 5 digits of card#id
+        dest.append("Card{}".format(card.get('id')[-5:]))
   return (identity[0], cards)
