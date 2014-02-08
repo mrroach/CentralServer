@@ -86,7 +86,7 @@ class TestRnd(TestLocation):
     mod = modifiers.NumRndCardsToAccess(
         self.game, 2, server=self.rnd)
     cards = self.rnd.rnd_cards_to_access()
-    self.assertEqual(self.rnd.cards[-3:], cards)
+    self.assertEqual(list(reversed(self.rnd.cards[-3:])), cards)
 
   def testRndHandlesRestrictionAndModifiers(self):
     upgrade = self.hq.cards[0]

@@ -301,7 +301,7 @@ class RnD(CentralServer):
 
   def rnd_cards_to_access(self):
     num = self.num_cards_to_access()
-    return self.cards[-num:]
+    return list(reversed(self.cards[-num:]))
 
   def on_access(self):
     self._current_access_list = self.cards_to_access()
