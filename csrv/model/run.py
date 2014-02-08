@@ -14,6 +14,7 @@ class Run(game_object.GameObject):
   def __init__(self, game, server):
     game_object.GameObject.__init__(self, game)
     self.server = server
+    self.successful = None
 
     # A phase to use instead of ApproachServer_4_5
     self.alternate_access_phase_class = None
@@ -44,12 +45,6 @@ class Run(game_object.GameObject):
     """Immediately end the run. Remove pending phases."""
     self.remove_phases()
     self.unsuccessful_run()
-
-  def cancel(self):
-    """Cancel the run. It is neither successful or unsuccessful."""
-    self.remove_phases()
-    self.game.run = None
-    self.game.log('The run was cancelled.')
 
   def on_uninstall_ice(self, sender, event):
     """If the currently encountered ice is trashed, move to the next one."""
@@ -108,8 +103,6 @@ class Run(game_object.GameObject):
       self.pass_ice()
     elif isinstance(phase, timing_phases.ApproachServer_4_4):
       self.begin_access()
-    elif isinstance(phase, timing_phases.ApproachServer_4_5):
-      self.successful_run()
     elif isinstance(phase, timing_phases.SelectAccessPhase):
       self.game.deregister_choice_provider(
           timing_phases.SelectAccessPhase, self, 'select_access_actions')
@@ -226,11 +219,22 @@ class Run(game_object.GameObject):
     self.server.on_access()
 
   def unsuccessful_run(self):
+    self.successful = False
     self.trigger_event(events.UnsuccessfulRun(self.game, self.game.runner))
     self.game.deregister_listener(events.UninstallIce, self)
     self.game.run = None
     self.game.log('The run is unsuccessful.')
 
   def successful_run(self):
+    self.successful = True
     self.trigger_event(events.SuccessfulRun(self.game, self.game.runner))
     self.game.log('The run is successful.')
+
+  def cancel(self):
+    """Cancel the run. It is neither successful or unsuccessful."""
+    # canceling only happens before success has been declared
+    if self.successful is None:
+      self.remove_phases()
+      self.game.run = None
+      self.game.log('The run was cancelled.')
+

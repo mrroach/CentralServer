@@ -240,6 +240,7 @@ csrv.Corp.prototype.update = function(corpState) {
       }
     }
     if (!found) {
+      this.remotes[remoteKeys[i]].remove();
       delete this.remotes[remoteKeys[i]];
     }
   }
@@ -424,6 +425,12 @@ csrv.Server.prototype.addChoice = function(choice) {
 
 csrv.Server.prototype.removeChoice = function(choice) {
   this.choices.splice(this.choices.indexOf(choice), 1);
+};
+
+csrv.Server.prototype.remove = function() {
+  if (this.div) {
+    this.div.remove();
+  }
 };
 
 csrv.Server.prototype.render = function() {

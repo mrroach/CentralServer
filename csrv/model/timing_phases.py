@@ -579,6 +579,10 @@ class ApproachServer_4_4(BasePhase):
     BasePhase.__init__(self, game, player)
     self.run = run
 
+  def begin(self):
+    BasePhase.begin(self)
+    self.run.successful_run()
+
 
 class ApproachServer_4_5_Begin(BasePhase):
   """The runner accesses cards in the attacked server."""
