@@ -3,7 +3,7 @@
 from csrv.model import game_object
 from csrv.model import events
 from csrv.model.cards import registry
-
+from csrv.model.cards import card_info
 
 class CardMeta(type):
   """A metaclass to register every known card."""
@@ -35,6 +35,8 @@ class CardBase(game_object.PlayerObject):
 
   TYPE = 'UNKNOWN'
   REZZABLE = False
+  INFLUENCE = 0
+  AGENDA_POINTS = 0
   MEMORY = 0
   KEYWORDS = set()
 
@@ -197,6 +199,14 @@ class CardBase(game_object.PlayerObject):
     self.is_rezzed = False
     self.is_faceup = False
     self.on_derez()
+
+  @classmethod
+  def influence_cost(cls, faction):
+    """Card influence cost for a given faction"""
+    if cls.FACTION == faction or cls.FACTION == card_info.NEUTRAL:
+      return 0
+    else:
+      return cls.INFLUENCE
 
   def _setup_choices(self, state):
     for timing_phase, method in getattr(
