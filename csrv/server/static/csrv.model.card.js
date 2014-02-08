@@ -231,6 +231,20 @@ csrv.Card.prototype.renderHosted = function() {
     }
   }
 };
+
+csrv.Card.prototype.addTrashIcon = function() {
+  var trashDiv = $('<div>', {'class': 'trash'});
+  trashDiv.append($('<img>', {src: '/static/images/redx.png'}));
+  this.div.append(trashDiv);
+};
+
+csrv.Card.prototype.removeTrashIcon = function() {
+  var trashDiv = this.div.children('.trash');
+  if (trashDiv) {
+    trashDiv.remove();
+  }
+};
+
 /**
  * Create and populate the card's token layer.
  */

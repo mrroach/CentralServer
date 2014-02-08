@@ -201,7 +201,9 @@ csrv.Choice = function(index, choice) {
   }
   if (choice['server'] && this.isRun()) {
     this.server = csrv.gameRegistry[choice['server']];
-    this.server.addChoice(this);
+    if (this.server) {
+      this.server.addChoice(this);
+    }
   }
 };
 
@@ -554,9 +556,14 @@ csrv.InstallProgramResponseHandler.prototype.showTrashChoices =
   for (var i = 0; i < targets.length; i++) {
     var target = csrv.gameRegistry[targets[i]];
     if (target) {
+      var idx = this.toTrash.indexOf(targets[i]);
+      if (idx == -1) {
+        var message = 'Trash ' + target.name;
+      } else {
+        var message = 'Do not trash ' + target.name;
+      }
       var choice = new csrv.ResponseChoice(
-          'Trash ' + target.name,
-          this.addTrashChoice.bind(this), targets[i]);
+          message, this.addTrashChoice.bind(this), targets[i]);
       this.trashChoices.push(choice);
       target.clearChoices();
       target.addChoice(choice);
@@ -579,7 +586,15 @@ csrv.InstallProgramResponseHandler.prototype.addTrashChoice = function(cardId) {
   if (!cardId) {
     this.hasTrash = true;
   } else {
-    this.toTrash.push(cardId);
+    var target = csrv.gameRegistry[cardId];
+    var idx = this.toTrash.indexOf(cardId);
+    if (idx == -1) {
+      target.addTrashIcon();
+      this.toTrash.push(cardId);
+    } else {
+      target.removeTrashIcon();
+      this.toTrash.splice(idx, 1);
+    }
   }
 
   for (var i = 0; i < this.trashChoices.length; i++) {
