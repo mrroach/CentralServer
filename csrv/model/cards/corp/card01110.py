@@ -7,7 +7,7 @@ class Card01110(operation.Operation):
   NAME = 'Card01110'
   SUBTYPES = ['Transaction']
   COST = 5
-  FACTION = 'Neutral'
+  FACTION = card_info.NEUTRAL
   INFLUENCE = 0
   NUMBER = 110
   SET = card_info.CORE

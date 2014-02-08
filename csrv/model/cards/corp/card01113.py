@@ -10,7 +10,7 @@ class Card01113(ice.Ice):
   NAME = 'Card01113'
   STRENGTH = 3
   COST = 3
-  FACTION = 'Neutral'
+  FACTION = card_info.NEUTRAL
   KEYWORDS = set([
       card_info.BARRIER,
   ])

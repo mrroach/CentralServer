@@ -12,7 +12,7 @@ class Card01056(asset.Asset):
   SUBTYPES = ['Advertisement']
   COST = 4
   TRASH_COST = 3
-  FACTION = 'ROBOCORP'
+  FACTION = card_info.ROBOCORP
   INFLUENCE = 2
 
   NUMBER = 56

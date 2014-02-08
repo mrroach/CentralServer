@@ -9,7 +9,7 @@ class Card01054(corp_identity.CorpIdentity):
 
   NAME = 'Card01054'
   SUBTYPES = ['Megacorp']
-  FACTION = 'ROBOCORP'
+  FACTION = card_info.ROBOCORP
   NUMBER = 54
   IMAGE_SRC = '01054.png'
   SET = card_info.CORE
