@@ -8,7 +8,7 @@ from csrv.model import pool
 class Card01054(corp_identity.CorpIdentity):
 
   NAME = 'Card01054'
-  SUBTYPES = ['Megacorp']
+  SUBTYPES = [card_info.MEGACORP]
   FACTION = card_info.ROBOCORP
   NUMBER = 54
   IMAGE_SRC = '01054.png'

@@ -5,7 +5,7 @@ from csrv.model.cards import operation
 class Card01110(operation.Operation):
 
   NAME = 'Card01110'
-  SUBTYPES = ['Transaction']
+  SUBTYPES = [card_info.TRANSACTION]
   COST = 5
   FACTION = card_info.NEUTRAL
   INFLUENCE = 0
