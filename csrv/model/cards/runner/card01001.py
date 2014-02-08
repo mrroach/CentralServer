@@ -3,7 +3,7 @@ from csrv.model.cards import card_info
 from csrv.model.cards import identity
 
 
-class Card01001(identity.Identity):
+class Card01001(identity.RunnerIdentity):
 
   NAME = u'Card01001'
   SET = card_info.CORE
@@ -22,7 +22,7 @@ class Card01001(identity.Identity):
   ]
 
   def build_actions(self):
-    identity.Identity.build_actions(self)
+    identity.RunnerIdentity.build_actions(self)
 
   def on_install_program(self, sender, event):
     if card_info.VIRUS in sender.KEYWORDS:

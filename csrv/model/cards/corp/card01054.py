@@ -1,11 +1,11 @@
 from csrv.model.cards import card_info
-from csrv.model.cards import corp_identity
+from csrv.model.cards import identity
 from csrv.model import events
 from csrv.model import actions
 from csrv.model import pool
 
 
-class Card01054(corp_identity.CorpIdentity):
+class Card01054(identity.CorpIdentity):
 
   NAME = 'Card01054'
   SUBTYPES = [card_info.MEGACORP]
@@ -20,7 +20,7 @@ class Card01054(corp_identity.CorpIdentity):
   ]
 
   def __init__(self, *args, **kwargs):
-    corp_identity.CorpIdentity.__init__(self, *args, **kwargs)
+    identity.CorpIdentity.__init__(self, *args, **kwargs)
     self.ability_used_on_turn = None
 
   def on_install_agenda_asset_upgrade(self, sender, event):
