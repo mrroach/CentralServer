@@ -227,6 +227,7 @@ corp_decks = {
         'Card01107',
         'Card01056',
         'Card01056',
+        'Card01056',
         'Card01057',
         'Card01057',
         'Card01108',
