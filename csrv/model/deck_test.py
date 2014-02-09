@@ -26,7 +26,8 @@ class DeckTest(test_base.TestBase):
     corp = deck.CorpDeck(
         invalid_decks.corp_decks['too_small']['identity'],
         invalid_decks.corp_decks['too_small']['cards'])
-    self.assertEqual(1, len(corp.validate()))
+    err = corp.validate()
+    self.assertEqual(1, len(err), err)
 
     """runner deck over max"""
     self.runner_deck.cards = self.runner_deck.cards[0:self.runner_deck.identity.MIN_DECK_SIZE + 10]
@@ -36,31 +37,40 @@ class DeckTest(test_base.TestBase):
     runner = deck.RunnerDeck(
         invalid_decks.runner_decks['too_small']['identity'],
         invalid_decks.runner_decks['too_small']['cards'])
-    self.assertEqual(1, len(runner.validate()))
+    err = runner.validate()
+    self.assertEqual(1, len(err), err)
 
   def test_max_influence_points(self):
     deck_type = 'too_much_influence'
     d = deck.CorpDeck(
         invalid_decks.corp_decks[deck_type]['identity'],
         invalid_decks.corp_decks[deck_type]['cards'])
-    self.assertEqual(1, len(d.validate()))
+    err = d.validate()
+    self.assertEqual(1, len(err), err)
 
   def test_more_than_three_copies_of_card(self):
     deck_type = 'more_than_3_copies'
     d = deck.CorpDeck(
         invalid_decks.corp_decks[deck_type]['identity'],
         invalid_decks.corp_decks[deck_type]['cards'])
-    self.assertEqual(1, len(d.validate()))
+    err = d.validate()
+    self.assertEqual(1, len(err), err)
 
   def test_corp_too_few_agenda_points(self):
     deck_type = 'too_few_agenda_points'
     d = deck.CorpDeck(
         invalid_decks.corp_decks[deck_type]['identity'],
         invalid_decks.corp_decks[deck_type]['cards'])
-    self.assertEqual(1, len(d.validate()))
+    err = d.validate()
+    self.assertEqual(1, len(err), err)
 
   def test_corp_out_of_faction_agendas(self):
-    pass
+    deck_type = 'out_of_faction_agendas'
+    d = deck.CorpDeck(
+        invalid_decks.corp_decks[deck_type]['identity'],
+        invalid_decks.corp_decks[deck_type]['cards'])
+    err = d.validate()
+    self.assertEqual(1, len(err), err)
 
   def test_corp_deck_cant_have_runner_cards(self):
     pass

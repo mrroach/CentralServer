@@ -2,6 +2,7 @@
 
 import random
 from csrv.model import cards
+from csrv.model.cards import card_info
 
 # This import is just to pull in all the card definitions
 import csrv.model.cards.corp
@@ -20,6 +21,7 @@ class Deck(object):
         self.cards.append(c)
 
   def _verify_less_than_three_copies(self):
+    """Make sure we have no more than 3 copies of a single cards"""
     card_list = {}
     for c in self.cards:
       card_list[c.NAME] = card_list.setdefault(c.NAME, 0) + 1
@@ -49,6 +51,7 @@ class CorpDeck(Deck):
       self._verify_min_deck_size(),
       self._verify_influence_points(),
       self._verify_less_than_three_copies(),
+      self._verify_in_faction_agendas(),
       self._verify_agenda_points()
     ])
 
@@ -59,6 +62,13 @@ class CorpDeck(Deck):
     if agenda_points/float(deck_size) < 2.0/5.0:
       self.is_valid = False
       return "Only {} Agenda Points in deck of {} cards".format(agenda_points, deck_size)
+
+  def _verify_in_faction_agendas(self):
+    """Make sure deck only contains in faction agendas"""
+    agendas = filter(lambda c: c.TYPE == card_info.AGENDA, self.cards)
+
+    if len(filter(lambda a: not a.FACTION in [card_info.NEUTRAL, self.identity.FACTION], agendas)):
+      return "Deck contains out-of-faction Agendas"
 
 class RunnerDeck(Deck):
   """A deck for a runner."""
