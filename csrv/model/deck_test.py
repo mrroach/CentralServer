@@ -73,10 +73,20 @@ class DeckTest(test_base.TestBase):
     self.assertEqual(1, len(err), err)
 
   def test_corp_deck_cant_have_runner_cards(self):
-    pass
+    deck_type = 'contains_runner_cards'
+    d = deck.CorpDeck(
+        invalid_decks.corp_decks[deck_type]['identity'],
+        invalid_decks.corp_decks[deck_type]['cards'])
+    err = d.validate()
+    self.assertEqual(1, len(err), err)
 
   def test_runner_deck_cant_have_corp_cards(self):
-    pass
+    deck_type = 'contains_corp_cards'
+    d = deck.RunnerDeck(
+        invalid_decks.runner_decks[deck_type]['identity'],
+        invalid_decks.runner_decks[deck_type]['cards'])
+    err = d.validate()
+    self.assertEqual(1, len(err), err)
 
 if __name__ == '__main__':
   unittest.main()

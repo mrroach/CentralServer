@@ -42,6 +42,11 @@ class Deck(object):
     if influence_spent > self.identity.MAX_INFLUENCE:
       return "Deck contains {} influence but only {} allowed".format(influence_spent, self.identity.MAX_INFLUENCE)
 
+  def _verify_side_only(self, side):
+    """Make sure we only have cards belonging to the correct side"""
+    if len(filter(lambda c: c.SIDE != side, self.cards)):
+      return "Deck contains cards from the other side (corp/runner)"
+
 class CorpDeck(Deck):
   """A deck for a corp."""
 
@@ -52,7 +57,8 @@ class CorpDeck(Deck):
       self._verify_influence_points(),
       self._verify_less_than_three_copies(),
       self._verify_in_faction_agendas(),
-      self._verify_agenda_points()
+      self._verify_agenda_points(),
+      self._verify_side_only(card_info.CORP)
     ])
 
   def _verify_agenda_points(self):
@@ -78,6 +84,7 @@ class RunnerDeck(Deck):
     return filter(None, [
       self._verify_min_deck_size(),
       self._verify_influence_points(),
-      self._verify_less_than_three_copies()
+      self._verify_less_than_three_copies(),
+      self._verify_side_only(card_info.RUNNER)
     ])
 
