@@ -6,6 +6,8 @@ from csrv.model.cards import event
 
 class ChooseUnrezzedIce(timing_phases.BasePhase):
   """Choose unrezzed ice to force the corp to rez or trash it."""
+
+  DESCRIPTION = 'Choose unrezzed ice to force the corp to rez or trash it.'
   NULL_OK = False
 
   def __init__(self, game, player, card):
@@ -36,6 +38,7 @@ class ForceRezAction(actions.Action):
 
 class RezOrTrash(timing_phases.BasePhase):
   """Decide whether to rez ice or trash it."""
+  DESCRIPTION = 'Decide whether to rez ice or trash it.'
   DEFAULT = 'Trash the ice'
 
   def __init__(self, game, player, ice):
