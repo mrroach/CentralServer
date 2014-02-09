@@ -5,9 +5,10 @@ from csrv.model.cards import operation
 class Card01110(operation.Operation):
 
   NAME = 'Card01110'
-  SUBTYPES = ['Transaction']
+  SUBTYPES = [card_info.TRANSACTION]
+  SIDE = card_info.CORP
   COST = 5
-  FACTION = 'Neutral'
+  FACTION = card_info.NEUTRAL
   INFLUENCE = 0
   NUMBER = 110
   SET = card_info.CORE

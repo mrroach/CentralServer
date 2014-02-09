@@ -1,12 +1,13 @@
 from csrv.model import actions
 from csrv.model.cards import card_base
 from csrv.model import timing_phases
+from csrv.model.cards import card_info
 
 
 class Event(card_base.CardBase):
   """An event card which can be paid for and played into the heap."""
 
-  TYPE = 'Operation'
+  TYPE = card_info.EVENT
 
   WHEN_IN_HAND_PROVIDES_CHOICES_FOR = {
       timing_phases.RunnerTurnActions: 'play_event_actions',

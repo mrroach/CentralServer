@@ -62,9 +62,10 @@ class DecideCard01055(timing_phases.ActivateAbilityChoice):
 class Card01055(agenda.Agenda):
 
   NAME = 'Card01055'
-  SUBTYPES = ['Research']
+  SUBTYPES = [card_info.RESEARCH]
   COST = None
-  FACTION = 'ROBOCORP'
+  SIDE = card_info.CORP
+  FACTION = card_info.ROBOCORP
   INFLUENCE = None
   NUMBER = 55
   SET = card_info.CORE

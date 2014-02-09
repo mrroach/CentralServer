@@ -1,5 +1,7 @@
 """Constants for card information."""
 
+UNKNOWN = 999
+
 # Card sets
 CORE = 1
 GENESIS = 2
@@ -9,6 +11,18 @@ SPIN_CYCLE = 4
 # Sides
 CORP = 0
 RUNNER = 1
+
+# Types
+IDENTITY = 0
+ICE = 1
+ASSET = 2
+AGENDA = 3
+UPGRADE = 4
+EVENT = 5
+OPERATION = 6
+HARDWARE = 7
+PROGRAM = 8
+RESOURCE = 9
 
 # Factions
 ANARCH = 0

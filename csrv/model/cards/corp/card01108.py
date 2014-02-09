@@ -11,7 +11,7 @@ class Card01108(asset.Asset):
   SUBTYPES = []
   COST = 1
   TRASH_COST = 1
-  FACTION = 'Neutral'
+  FACTION = card_info.NEUTRAL
   INFLUENCE = 0
   SET = card_info.CORE
   SIDE = card_info.CORP

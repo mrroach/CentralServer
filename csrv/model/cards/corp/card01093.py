@@ -1,9 +1,9 @@
 from csrv.model import events
 from csrv.model.cards import card_info
-from csrv.model.cards import corp_identity
+from csrv.model.cards import identity
 
 
-class Card01093(corp_identity.CorpIdentity):
+class Card01093(identity.CorpIdentity):
 
   NAME = u'Card01093'
   SET = card_info.CORE

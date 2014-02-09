@@ -11,6 +11,9 @@
         <input type="file" name="file" id="file">
         <input type="submit" value="next">
       </p>
+      {% for error in errors %}
+      <p class="error">{{ error }}</p>
+      {% end %}
       <p><h3>Use a premade deck</h3>
       <select name="premade" id="premade">
       {% for i, deck in enumerate(decks) %}

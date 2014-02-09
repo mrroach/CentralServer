@@ -7,11 +7,12 @@ from csrv.model import modifiers
 from csrv.model import parameters
 from csrv.model.cards import card_base
 from csrv.model import timing_phases
+from csrv.model.cards import card_info
 
 
 class Ice(card_base.CardBase):
 
-  TYPE = 'Ice'
+  TYPE = card_info.ICE
   REZZABLE = True
 
   WHEN_IN_HAND_PROVIDES_CHOICES_FOR = {
