@@ -19,6 +19,15 @@ class Deck(object):
       if c:
         self.cards.append(c)
 
+  def _verify_less_than_three_copies(self):
+    card_list = {}
+    for c in self.cards:
+      card_list[c.NAME] = card_list.setdefault(c.NAME, 0) + 1
+
+    invalid_cards = filter(lambda x: card_list[x] > 3, card_list)
+    if len(invalid_cards):
+      return "Deck contains more than 3 copies of the following cards: {}".format(', '.join(invalid_cards))
+
   def _verify_min_deck_size(self):
     """Make sure deck meets minimum deck size limit"""
     if len(self.cards) < self.identity.MIN_DECK_SIZE:
@@ -39,6 +48,7 @@ class CorpDeck(Deck):
     return filter(None, [
       self._verify_min_deck_size(),
       self._verify_influence_points(),
+      self._verify_less_than_three_copies(),
       self._verify_agenda_points()
     ])
 
@@ -57,6 +67,7 @@ class RunnerDeck(Deck):
     """Return a list of errors with the deck."""
     return filter(None, [
       self._verify_min_deck_size(),
-      self._verify_influence_points()
+      self._verify_influence_points(),
+      self._verify_less_than_three_copies()
     ])
 

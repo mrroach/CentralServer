@@ -39,18 +39,24 @@ class DeckTest(test_base.TestBase):
     self.assertEqual(1, len(runner.validate()))
 
   def test_max_influence_points(self):
+    deck_type = 'too_much_influence'
     d = deck.CorpDeck(
-        invalid_decks.corp_decks['too_much_influence']['identity'],
-        invalid_decks.corp_decks['too_much_influence']['cards'])
+        invalid_decks.corp_decks[deck_type]['identity'],
+        invalid_decks.corp_decks[deck_type]['cards'])
     self.assertEqual(1, len(d.validate()))
 
   def test_more_than_three_copies_of_card(self):
-    pass
+    deck_type = 'more_than_3_copies'
+    d = deck.CorpDeck(
+        invalid_decks.corp_decks[deck_type]['identity'],
+        invalid_decks.corp_decks[deck_type]['cards'])
+    self.assertEqual(1, len(d.validate()))
 
   def test_corp_too_few_agenda_points(self):
+    deck_type = 'too_few_agenda_points'
     d = deck.CorpDeck(
-        invalid_decks.corp_decks['too_few_agenda_points']['identity'],
-        invalid_decks.corp_decks['too_few_agenda_points']['cards'])
+        invalid_decks.corp_decks[deck_type]['identity'],
+        invalid_decks.corp_decks[deck_type]['cards'])
     self.assertEqual(1, len(d.validate()))
 
   def test_corp_out_of_faction_agendas(self):
