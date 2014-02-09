@@ -64,6 +64,7 @@ class Card01055(agenda.Agenda):
   NAME = 'Card01055'
   SUBTYPES = [card_info.RESEARCH]
   COST = None
+  SIDE = card_info.CORP
   FACTION = card_info.ROBOCORP
   INFLUENCE = None
   NUMBER = 55

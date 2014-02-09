@@ -9,6 +9,7 @@ class Card01056(asset.Asset):
 
   NAME = 'Card01056'
   SET = card_info.CORE
+  SIDE = card_info.CORP
   SUBTYPES = [card_info.ADVERTISEMENT]
   COST = 4
   TRASH_COST = 3

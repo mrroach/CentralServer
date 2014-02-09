@@ -8,6 +8,7 @@ from csrv.model.cards import ice
 class Card01113(ice.Ice):
 
   NAME = 'Card01113'
+  SIDE = card_info.CORP
   STRENGTH = 3
   COST = 3
   FACTION = card_info.NEUTRAL
