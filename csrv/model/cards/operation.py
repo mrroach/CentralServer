@@ -2,12 +2,13 @@ from csrv.model import actions
 from csrv.model import events
 from csrv.model.cards import card_base
 from csrv.model import timing_phases
+from csrv.model.cards import card_info
 
 
 class Operation(card_base.CardBase):
   """An operation card which can be paid for and played into archives."""
 
-  TYPE = 'Operation'
+  TYPE = card_info.OPERATION
 
   WHEN_IN_HAND_PROVIDES_CHOICES_FOR = {
       timing_phases.CorpTurnActions: 'play_operation_actions',

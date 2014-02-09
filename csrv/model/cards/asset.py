@@ -5,11 +5,12 @@ from csrv.model import events
 from csrv.model import game_object
 from csrv.model import timing_phases
 from csrv.model.cards import installable_card
+from csrv.model.cards import card_info
 
 
 class Asset(installable_card.InstallableCard):
 
-  TYPE = 'Asset'
+  TYPE = card_info.ASSET
   REZZABLE = True
   TRASHABLE = True
 

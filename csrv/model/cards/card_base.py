@@ -33,7 +33,7 @@ class CardBase(game_object.PlayerObject):
 
   __metaclass__ = CardMeta
 
-  TYPE = 'UNKNOWN'
+  TYPE = card_info.UNKNOWN
   REZZABLE = False
   INFLUENCE = 0
   AGENDA_POINTS = 0
