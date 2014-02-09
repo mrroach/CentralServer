@@ -20,7 +20,7 @@ class Card01002Action(actions.PlayEventAction):
             'You must select cards from the heap')
     if len(response.cards) == 2:
       for card in response.cards:
-        if card_info.VIRUS not in response.cards[0].KEYWORDS:
+        if card_info.VIRUS not in card.KEYWORDS:
           raise errors.InvalidResponse(
               'If you select two cards, they must both be viruses')
     elif len(response.cards) != 1:
