@@ -230,18 +230,18 @@ csrv.Choice.prototype.descriptionHtml = function() {
     var cred = $('<img>', {
       'class': 'credit',
       src: '/static/images/credit.png'});
-    html = html.replace(/\[[cC]red(it)?(s)?\]/, cred[0].outerHTML);
+    html = html.replace(/\[[cC]red(it)?(s)?\]/g, cred[0].outerHTML);
   }
   if (this.description.match(/\[[cC]lick\]/)) {
     var cred = $('<img>', {
       'class': 'click',
       src: '/static/images/click.png'});
-    html = html.replace(/\[[cC]lick\]/, cred[0].outerHTML);
+    html = html.replace(/\[[cC]lick\]/g, cred[0].outerHTML);
   }
   if (md = this.description.match(/(Card\d{5})/)) {
     var cardName = csrv.game.localization.cards[md[1]];
     if (cardName) {
-      html = html.replace(/Card\d{5}/, cardName);
+      html = html.replace(/Card\d{5}/g, cardName);
     }
   }
 
