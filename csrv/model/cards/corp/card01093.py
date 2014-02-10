@@ -5,7 +5,7 @@ from csrv.model.cards import identity
 
 class Card01093(identity.CorpIdentity):
 
-  NAME = u'Card01093'
+  NAME = 'Card01093'
   SET = card_info.CORE
   NUMBER = 93
   SIDE = card_info.CORP

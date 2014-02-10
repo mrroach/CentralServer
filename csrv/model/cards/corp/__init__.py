@@ -35,6 +35,7 @@ from card01089 import Card01089
 from card01090 import Card01090
 from card01091 import Card01091
 from card01092 import Card01092
+from card01093 import Card01093
 from card01094 import Card01094
 from card01095 import Card01095
 from card01096 import Card01096
