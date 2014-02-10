@@ -1,10 +1,10 @@
 from csrv.model import appropriations
 from csrv.model import pool
 from csrv.model.cards import card_info
-from csrv.model.cards import corp_identity
+from csrv.model.cards import identity
 
 
-class Card01080(corp_identity.CorpIdentity):
+class Card01080(identity.CorpIdentity):
 
   NAME = u'Card01080'
   SET = card_info.CORE

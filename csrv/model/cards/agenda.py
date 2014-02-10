@@ -6,11 +6,12 @@ from csrv.model import game_object
 from csrv.model import modifiers
 from csrv.model import timing_phases
 from csrv.model.cards import installable_card
+from csrv.model.cards import card_info
 
 
 class Agenda(installable_card.InstallableCard):
 
-  TYPE = 'Agenda'
+  TYPE = card_info.AGENDA
   ADVANCEABLE = True
   TRASHABLE = False
 

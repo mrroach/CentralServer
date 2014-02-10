@@ -10,6 +10,9 @@
       <p><h3>Upload a .o8d file</h3>
         <input type="file" name="file" id="file">
       </p>
+      {% for error in errors %}
+      <p class="error">{{ error }}</p>
+      {% end %}
       <p><h3>Use a premade deck</h3>
       <select name="premade" id="premade">
       {% for i, deck in enumerate(decks) %}

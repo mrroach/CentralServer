@@ -7,11 +7,12 @@ from csrv.model import game_object
 from csrv.model import modifiers
 from csrv.model import parameters
 from csrv.model import timing_phases
+from csrv.model.cards import card_info
 
 
 class Program(card_base.CardBase):
 
-  TYPE = 'Program'
+  TYPE = card_info.PROGRAM
   REZZABLE = False
 
   WHEN_INSTALLED_LISTENS = [
