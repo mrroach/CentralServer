@@ -18,7 +18,8 @@ class GiveATag(actions.Action):
 
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
     self.card.power_counters -= 1
-    self.game.runner.tags += 1
+    self.game.insert_next_phase(
+        timing_phases.TakeTags(self.game, self.game.runner, 1))
 
 
 class TakeATag(actions.Action):

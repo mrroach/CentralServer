@@ -11,7 +11,8 @@ class YesCard01087(actions.Action):
     self.advancements = advancements
 
   def resolve(self, response=None):
-    self.game.runner.tags += self.advancements
+    self.game.insert_next_phase(
+        timing_phases.TakeTags(self.game, self.game.runner, self.advancements))
 
 
 class NoCard01087(actions.Action):

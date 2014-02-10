@@ -23,7 +23,8 @@ class Card01086(operation.Operation):
 
   def on_success(self, corp_total, runner_total):
     self.log('The runner takes a tag')
-    self.game.runner.tags += 1
+    self.game.insert_next_phase(
+        timing_phases.TakeTags(self.game, self.game.runner, 1))
 
   def on_failure(self, corp_total, runner_total):
     pass

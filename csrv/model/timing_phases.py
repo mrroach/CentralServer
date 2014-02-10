@@ -346,6 +346,9 @@ class CorpTurnActions(BasePhase):
 
   NULL_OK = False
 
+  def __init__(self, game, player):
+    BasePhase.__init__(self, game, player, both_players=False)
+
   def add_abilities_phase(self):
     self.game.insert_phase_before(
         self, CorpTurnAbilities(self.game, self.game.corp))
@@ -394,6 +397,9 @@ class RunnerTurnActions(BasePhase):
   """The runner takes actions."""
 
   NULL_OK = False
+
+  def __init__(self, game, player):
+    BasePhase.__init__(self, game, player, both_players=False)
 
   def add_abilities_phase(self):
     self.game.insert_phase_before(
@@ -774,6 +780,19 @@ class TakeMeatDamage(TakeDamage):
   @property
   def default(self):
     return 'Take %s meat damage' % self.damage
+
+
+class TakeTags(BasePhase):
+  """The runner takes tags."""
+
+  def __init__(self, game, player, tags=1):
+    BasePhase.__init__(self, game, player, both_players=False)
+    self.tags = tags
+
+  def resolve(self, choice, response):
+    BasePhase.resolve(self, choice, response)
+    if not choice and self.tags:
+      self.game.runner.tags += self.tags
 
 
 class ActivateAbilityChoice(BasePhase):

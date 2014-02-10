@@ -29,7 +29,8 @@ class DecideCard01095(timing_phases.ActivateAbilityChoice):
     if choice == self.yes_action:
       self.card.banish()
       self.game.corp.bad_publicity += 1
-      self.game.runner.tags += 1
+      self.game.insert_next_phase(
+          timing_phases.TakeTags(self.game, self.game.runner, 1))
     self.end_phase()
 
 

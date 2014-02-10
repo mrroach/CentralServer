@@ -15,6 +15,8 @@ class YesCard01070(actions.Action):
   def resolve(self, response=None):
     actions.Action.resolve(self, response=response)
     self.game.log('The runner takes 3 net damage and a tag.')
+    self.game.insert_next_phase(
+        timing_phases.TakeTags(self.game, self.game.runner, 1))
     self.game.runner.tags += 1
     damage_phase = timing_phases.TakeNetDamage(self.game, self.game.runner, 3)
     self.game.insert_next_phase(damage_phase)

@@ -22,7 +22,8 @@ class Card01082(agenda.Agenda):
   def score(self):
     agenda.Agenda.score(self)
     self.log('The runner takes 2 tags from Card01082')
-    self.game.runner.tags += 2
+    self.game.insert_next_phase(
+        timing_phases.TakeTags(self.game, self.game.runner, 2))
     self.game.register_listener(events.CorpTurnEnd, self)
 
   def on_corp_turn_end(self, sender, event):
