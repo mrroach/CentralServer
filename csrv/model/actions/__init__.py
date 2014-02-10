@@ -25,6 +25,7 @@ from csrv.model.actions.jack_out import JackOut
 from csrv.model.actions.make_a_run_action import MakeARunAction
 from csrv.model.actions.mulligan_action import MulliganAction
 from csrv.model.actions.new_timing_phase import NewTimingPhase
+from csrv.model.actions.place_advancement import PlaceAdvancement
 from csrv.model.actions.play_event_action import PlayEventAction
 from csrv.model.actions.play_operation_action import PlayOperationAction
 from csrv.model.actions.purge_virus_counters import PurgeVirusCounters

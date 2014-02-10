@@ -42,7 +42,7 @@ class RezOrTrash(timing_phases.BasePhase):
   DEFAULT = 'Trash the ice'
 
   def __init__(self, game, player, ice):
-    timing_phases.BasePhase.__init__(self, game, player)
+    timing_phases.BasePhase.__init__(self, game, player, both_players=False)
     self.ice = ice
 
   def choices(self, refresh=False):
