@@ -24,7 +24,7 @@ class InstallWithDiscount(timing_phases.BasePhase):
     if not self._choices or refresh:
       self._choices = []
       for card in self.player.grip.cards:
-        if card.TYPE in ['Program', 'Hardware']:
+        if card.TYPE in [card_info.PROGRAM, card_info.HARDWARE]:
           self._choices.append(card.install_action)
     return self._choices
 
@@ -60,7 +60,7 @@ class Card01035(event.Event):
   def is_playable(self):
     have_installable = False
     for card in self.player.grip.cards:
-      if (card.TYPE in ['Program', 'Hardware'] and
+      if (card.TYPE in [card_info.PROGRAM, card_info.HARDWARE] and
           card.cost - 3 < self.player.credits.value):
         have_installable = True
         break
