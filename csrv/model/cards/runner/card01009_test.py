@@ -15,6 +15,8 @@ class Card01009Test(test_base.TestBase):
   def setUp(self):
     test_base.TestBase.setUp(self)
     self.card = card01009.Card01009(self.game, self.game.runner)
+    for c in self.runner.grip.cards:
+      self.runner.stack.add(c)
     self.viruses = [c for c in self.runner.stack.cards
                     if c.NAME in ['Card01010', 'Card01008']]
     self.virus = self.viruses[0]
@@ -51,6 +53,7 @@ class Card01009Test(test_base.TestBase):
 
   def test_memory_limits(self):
     self.game.runner.rig.add(self.card)
+    self.assertEqual(3, len(self.viruses[1:]))
     for card in self.viruses[1:]:
       self.game.runner.rig.add(card)
       self.card.host_card(card)
@@ -59,10 +62,10 @@ class Card01009Test(test_base.TestBase):
     response.host = self.card
     self.assertRaises(
         errors.InvalidResponse,
-        self.game.resolve_current_phase, card.install_action, response)
+        self.game.resolve_current_phase, self.virus.install_action, response)
     to_trash = list(self.card.hosted_cards)[0]
     response.programs_to_trash.append(to_trash)
-    self.game.resolve_current_phase(card.install_action, response)
+    self.game.resolve_current_phase(self.virus.install_action, response)
     self.assertEqual(self.game.runner.heap, to_trash.location)
 
 
