@@ -42,3 +42,4 @@ class Card01005(hardware.Hardware):
   def on_uninstall(self):
     self.pool.remove()
     self.player.credit_pools.remove(self.pool)
+    self.pool = None
