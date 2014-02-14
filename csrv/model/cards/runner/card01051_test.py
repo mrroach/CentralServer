@@ -63,6 +63,10 @@ class TestCard01051(unittest.TestCase):
     self.game.resolve_current_phase(None, None)
     self.game.resolve_current_phase(None, None)
 
+    self.assertIsInstance(
+        self.game.current_phase(), timing_phases.TrashAProgram)
+    self.game.resolve_current_phase(None, None)
+
     # Check the the card trashed itself.
     self.assertEqual(self.game.runner.heap, self.card.location)
 

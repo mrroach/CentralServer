@@ -2,6 +2,7 @@ from csrv.model import actions
 from csrv.model import cost
 from csrv.model import errors
 from csrv.model import timing_phases
+from csrv.model.actions import trash_a_program
 from csrv.model.cards import asset
 from csrv.model.cards import program
 from csrv.model.cards import card_info
@@ -38,7 +39,7 @@ class Card01057Phase(timing_phases.BasePhase):
     timing_phases.BasePhase.__init__(self, game, player, both_players=False)
     self._max_choices = card.advancement_tokens
     self._num_chosen = 0
-    self._chosen = set()
+    self._chosen = {}
 
   def choices(self, refresh=False):
     if self._choices is None or refresh:
@@ -46,17 +47,18 @@ class Card01057Phase(timing_phases.BasePhase):
       programs = [card for card in self.game.runner.rig.cards
                   if isinstance(card, program.Program)]
       self._choices = [
-          actions.Trash(self.game, self.player, card) for card in programs]
+          trash_a_program.TrashAProgram(
+              self.game, self.player, card) for card in programs]
     return self._choices
 
   def resolve(self, choice, response):
     if choice:
-      self._chosen.add(choice)
+      self._chosen[choice.card] = choice
       self._num_chosen += 1
     else:
       raise errors.ChoiceRequiredError('You must choose one of the options')
     if self._num_chosen == self._max_choices:
-      for c in self._chosen:
+      for c in self._chosen.values():
         c.resolve(None)
       self.end_phase()
 

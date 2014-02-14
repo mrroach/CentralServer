@@ -795,6 +795,19 @@ class TakeTags(BasePhase):
       self.game.runner.tags += self.tags
 
 
+class TrashAProgram(BasePhase):
+  """A program is trashed."""
+
+  def __init__(self, game, player, program):
+    BasePhase.__init__(self, game, player, both_players=False)
+    self.program = program
+
+  def resolve(self, choice, response):
+    BasePhase.resolve(self, choice, response)
+    if not choice and self.program.is_installed:
+      self.program.trash()
+
+
 class ActivateAbilityChoice(BasePhase):
   """Decide whether to use a card's optional ability."""
   NULL_OK = False

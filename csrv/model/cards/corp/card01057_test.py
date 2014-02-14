@@ -46,6 +46,12 @@ class Card01057Test(test_base.TestBase):
     self.game.resolve_current_phase(choices[0], None)
     self.assertEqual(4, len(choices))
     self.game.resolve_current_phase(choices[1], None)
+    self.assertIsInstance(
+        self.game.current_phase(), timing_phases.TrashAProgram)
+    self.game.resolve_current_phase(None, None)
+    self.assertIsInstance(
+        self.game.current_phase(), timing_phases.TrashAProgram)
+    self.game.resolve_current_phase(None, None)
     self.assertEqual(2, self.runner.heap.size)
     self.assertEqual(2, self.runner.rig.size)
     self.assertEqual(4, self.corp.credits.value)

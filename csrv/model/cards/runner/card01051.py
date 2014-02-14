@@ -59,5 +59,5 @@ class Card01051(program.Program):
     if self.virus_counters:
       self.virus_counters -= 1
     else:
-      self.trash()
-
+      self.game.insert_next_phase(
+          timing_phases.TrashAProgram(self.game, self.player, self))

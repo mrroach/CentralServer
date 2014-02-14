@@ -1,5 +1,5 @@
 import subroutine
-from csrv.model.actions import trash
+from csrv.model.actions import trash_a_program
 from csrv.model import timing_phases
 from csrv.model.cards import program
 
@@ -13,7 +13,8 @@ class SelectProgramToTrashPhase(timing_phases.BasePhase):
       programs = [card for card in self.game.runner.rig.cards
                   if isinstance(card, program.Program)]
       self._choices = [
-          trash.Trash(self.game, self.player, card) for card in programs]
+          trash_a_program.TrashAProgram(
+              self.game, self.player, card) for card in programs]
     return self._choices
 
   def resolve(self, choice, response):
