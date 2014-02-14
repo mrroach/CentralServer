@@ -305,6 +305,7 @@ csrv.Runner.prototype.update = function(runnerState) {
     csrv.game.choices.fastModeDisable();
   }
   this.clicks = runnerState['clicks'];
+  this.link = runnerState['link'];
   this.memory = runnerState['free_memory'];
   this.agendaPoints = runnerState['agenda_points'];
   this.tags = runnerState['tags'];

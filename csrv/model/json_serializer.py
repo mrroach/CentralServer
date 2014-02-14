@@ -201,6 +201,7 @@ def serialize_runner(runner, hidden=False):
       'credits': credits,
       'agenda_points': runner.agenda_points,
       'brain_damage': runner.brain_damage,
+      'link': runner.link.value,
       'tags': runner.tags,
       'scored_agendas': [serialize_card(c) for c in runner.scored_agendas.cards],
       'identity': serialize_minimal(runner.identity),
