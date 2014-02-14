@@ -8,14 +8,17 @@ from csrv.model import premade_decks
 
 
 class TestBase(unittest.TestCase):
+  CORP_DECK = 'RoboCorp Core'
+  RUNNER_DECK = 'Anarch Core'
 
   def setUp(self):
-    self.corp_deck = deck.CorpDeck(
-        premade_decks.corp_decks[0]['identity'],
-        premade_decks.corp_decks[0]['cards'])
-    self.runner_deck = deck.RunnerDeck(
-        premade_decks.runner_decks[0]['identity'],
-        premade_decks.runner_decks[0]['cards'])
+    corp_info = [d for d in premade_decks.corp_decks
+                 if d['name'] == self.CORP_DECK][0]
+    runner_info = [d for d in premade_decks.runner_decks
+                   if d['name'] == self.RUNNER_DECK][0]
+    self.corp_deck = deck.CorpDeck(corp_info['identity'], corp_info['cards'])
+    self.runner_deck = deck.RunnerDeck(runner_info['identity'],
+                                       runner_info['cards'])
     self.game = game.Game(self.corp_deck, self.runner_deck)
     self.corp = self.game.corp
     self.runner = self.game.runner

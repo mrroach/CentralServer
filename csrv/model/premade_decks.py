@@ -71,7 +71,22 @@ runner_decks = [
          'Card01005', 'Card01005', 'Card01006', 'Card01016', 'Card01016',
          'Card01052', 'Card01052', 'Card01052', 'Card01053', 'Card01053',
          'Card01053', 'Card01015',
+    ]},
+    {'name': 'Shaper Core',
+     'identity': 'Card01033',
+     'cards': [
+         'Card01034', 'Card01034', 'Card01034', 'Card01035', 'Card01035',
+         'Card01036', 'Card01036', 'Card01036', 'Card01037', 'Card01037',
+         'Card01037', 'Card01038', 'Card01038', 'Card01039', 'Card01039',
+         'Card01040', 'Card01040', 'Card01041', 'Card01042', 'Card01042',
+         'Card01043', 'Card01043', 'Card01043', 'Card01044', 'Card01044',
+         'Card01045', 'Card01045', 'Card01046', 'Card01046', 'Card01047',
+         'Card01048', 'Card01048', 'Card01049', 'Card01049', 'Card01049',
+         'Card01050', 'Card01050', 'Card01050', 'Card01051', 'Card01051',
+         'Card01051', 'Card01052', 'Card01052', 'Card01052', 'Card01053',
+         'Card01053', 'Card01053',
     ],
   }
+
 ]
 

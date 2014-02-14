@@ -154,7 +154,6 @@ class Server(game_object.PlayerObject):
 
   def access_cards(self):
     for card in self.cards_to_access():
-      print 'Accessing %s from %s' % (card, self)
       # begin advertising access actions
       card.on_access()
 
