@@ -210,6 +210,10 @@ class EndTakeBrainDamage(BaseEvent):
   """A brain damage phase ends."""
 
 
+class EndTakeNetDamage(BaseEvent):
+  """A net damage phase ends."""
+
+
 class EndTraceCorpBoost(BaseEvent):
   """The corp finishes boosting a trace."""
 

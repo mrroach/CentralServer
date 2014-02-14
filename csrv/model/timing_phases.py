@@ -746,6 +746,7 @@ class TakeDamage(BasePhase):
   def __init__(self, game, player, damage=1):
     BasePhase.__init__(self, game, player, both_players=False)
     self.damage = damage
+    self.original_damage = damage
 
   def resolve(self, choice, response):
     BasePhase.resolve(self, choice, response)
