@@ -8,10 +8,11 @@ class FetchAndInstallOther(actions.InstallHardware):
   DESCRIPTION = ('Fetch and install another copy of Card01039.'
                  ' Shuffle your stack.')
 
-  def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
-    actions.Action.resolve(self, response,
-                           ignore_clicks=ignore_clicks,
-                           ignore_all_costs=ignore_all_costs)
+  def resolve(self, response=None, ignore_clicks=True, ignore_all_costs=False):
+    actions.InstallHardware.resolve(
+        self, response,
+        ignore_clicks=ignore_clicks,
+        ignore_all_costs=ignore_all_costs)
     self.player.stack.shuffle()
 
 
