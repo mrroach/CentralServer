@@ -10,6 +10,7 @@ from csrv.model import parameters
 class Action(game_object.PlayerObject):
   COST_CLASS = cost.NullCost
   REQUEST_CLASS = parameters.NullRequest
+  DESCRIPTION = 'Oops. This action has no description!'
 
   def __init__(self, game, player, card=None, cost=None):
     game_object.PlayerObject.__init__(self, game, player)

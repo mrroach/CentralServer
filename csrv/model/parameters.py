@@ -306,3 +306,21 @@ class VariableCreditCostResponse(Response):
 
 class VariableCreditCostRequest(Request):
   RESPONSE_CLASS = VariableCreditCostResponse
+
+
+class ArrangeCardsResponse(Response):
+  def __init__(self):
+    Response.__init__(self)
+    self.cards = []
+
+
+class ArrangeCardsRequest(Request):
+  RESPONSE_CLASS = ArrangeCardsResponse
+
+  def __init__(self, game, cards=None):
+    Request.__init__(self, game)
+    self.cards = cards
+
+  def valid_response_options(self):
+    return {'cards': [c.game_id for c in self.cards]}
+
