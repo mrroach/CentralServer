@@ -24,7 +24,7 @@ class Card01078(ice.Ice):
   def __init__(self, game, player):
     ice.Ice.__init__(self, game, player)
     self.subroutines = [
-        do_net_damage.DoNetDamage(self, game, player, card=self, damage=2),
+        do_net_damage.DoNetDamage(game, player, card=self, damage=2),
         subroutines.EndTheRun(self, game)
     ]
 

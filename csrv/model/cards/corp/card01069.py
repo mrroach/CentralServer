@@ -62,6 +62,7 @@ class Card01069(asset.Asset):
     if self.is_installed and self.advancement_tokens:
       phase = DecideCard01069(
           self.game, self.player,
-          timingPhases.TakeNetDamage(self.game, self.game.runner, 2 * self.advancement_tokens))
+          timing_phases.TakeNetDamage(self.game, self.game.runner,
+                                      2 * self.advancement_tokens))
       self.game.insert_next_phase(phase)
       phase.begin()

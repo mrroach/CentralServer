@@ -20,8 +20,8 @@ class DecideCard01095(timing_phases.ActivateAbilityChoice):
   def __init__(self, game, player, card):
     timing_phases.ActivateAbilityChoice.__init__(
         self, game, player,
-        YesCard01095,
-        NoCard01095,
+        YesCard01095(game, player),
+        NoCard01095(game, player),
         None)
     self.card = card
 
@@ -54,4 +54,4 @@ class Card01095(agenda.Agenda):
 
   def score(self):
     agenda.Agenda.score(self)
-    self.game.insert_next_phase(DecideCard01095(self.game, self.player))
+    self.game.insert_next_phase(DecideCard01095(self.game, self.player, self))

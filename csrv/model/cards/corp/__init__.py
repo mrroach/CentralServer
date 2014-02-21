@@ -11,6 +11,7 @@ from card01063 import Card01063
 from card01064 import Card01064
 from card01065 import Card01065
 from card01066 import Card01066
+from card01067 import Card01067
 from card01068 import Card01068
 from card01069 import Card01069
 from card01070 import Card01070

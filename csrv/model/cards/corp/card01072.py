@@ -34,7 +34,7 @@ class Card01072(operation.Operation):
         timing_phases.TakeNetDamage(self.game, self.game.runner, 1))
     self.game.current_phase().begin()
 
-  def on_run_begins(self):
+  def on_run_begins(self, sender, event):
     self.last_run_made_turn = self.game.corp_turn_count
 
   def is_playable(self):
