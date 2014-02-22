@@ -38,5 +38,5 @@ class Card01072(operation.Operation):
     self.last_run_made_turn = self.game.corp_turn_count
 
   def is_playable(self):
-    return (operation.Operation.is_playable() and
+    return (operation.Operation.is_playable(self) and
             self.last_run_made_turn == self.game.corp_turn_count - 1)

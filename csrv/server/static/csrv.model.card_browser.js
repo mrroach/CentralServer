@@ -9,7 +9,8 @@ csrv.CardBrowser.prototype.show = function(options) {
     callback: function(chosenIds) {},
     renderCopy: true,
     buttonText: 'Ok',
-    allowSelect: true
+    allowSelect: true,
+    sortable: false
   }, options || {});
   this.div.empty();
   var browser = $('<div>', {'class': 'card-list'});
@@ -28,16 +29,26 @@ csrv.CardBrowser.prototype.show = function(options) {
         $(evt.currentTarget).toggleClass('chosen');
       });
     }
+    if (options['sortable']) {
+      this.div.children('.card-list').sortable();
+    }
   }
   console.log('opening dialog');
   this.openDialog(options);
 };
 
 csrv.CardBrowser.prototype.openDialog = function(options) {
-  var buttonOpts = {
-    text: options['buttonText'],
-    click: this.buildCallback(options['callback'])
-  };
+  if (options['sortable']) {
+    var buttonOpts = {
+      text: options['buttonText'],
+      click: this.buildSortCallback(options['callback'])
+    };
+  } else {
+    var buttonOpts = {
+      text: options['buttonText'],
+      click: this.buildCallback(options['callback'])
+    };
+  }
   this.div.dialog({
     title: options['message'],
     buttons: [buttonOpts],
@@ -59,4 +70,17 @@ csrv.CardBrowser.prototype.buildCallback = function(callback) {
     $('#card_browser').dialog('destroy');
     callback(chosenIds);
   };
-}
+};
+
+csrv.CardBrowser.prototype.buildSortCallback = function(callback) {
+  return function(event) {
+    var cards = $('#card_browser .card');
+    $('#card_browser').dialog('close');
+    var cardIds = [];
+    for (var i = 0; i < cards.length; i++) {
+      cardIds.push($(cards[i]).attr('data-gameId'));
+    }
+    $('#card_browser').dialog('destroy');
+    callback(cardIds);
+  };
+};

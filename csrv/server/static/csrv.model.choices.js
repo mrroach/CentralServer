@@ -668,7 +668,6 @@ csrv.InstallHardwareResponseHandler.prototype.setHostChoice = function(hostId) {
   this.checkResponse();
 };
 
-
 csrv.InstallHardwareResponseHandler.prototype.checkResponse = function() {
   if (!this.hasHost) {
     if (this.choice.validResponseOptions['host'].length) {
@@ -833,8 +832,7 @@ csrv.NumericChoiceResponseHandler.prototype.showNumberChoices = function() {
 
 
 csrv.SearchForCardsResponseHandler = function(choice, responseType) {
-   csrv.ChoiceHandler.call(
-      this, choice, responseType);
+   csrv.ChoiceHandler.call(this, choice, responseType);
 };
 csrv.SearchForCardsResponseHandler.prototype = new csrv.ChoiceHandler();
 
@@ -873,6 +871,55 @@ csrv.SearchForCardsResponseHandler.prototype.showCardChoices = function() {
     cards: this.cardChoices(),
     callback: this.setCards.bind(this)
   });
+};
+
+csrv.ArrangeCardsResponseHandler = function(choice, responseType) {
+   csrv.ChoiceHandler.call(this, choice, 'ArrangeCardsResponse');
+  this.checkResponse();
+};
+csrv.ArrangeCardsResponseHandler.prototype = new csrv.ChoiceHandler();
+csrv.ArrangeCardsResponseHandler.prototype.constructor =
+    csrv.ArrangeCardsResponseHandler;
+
+csrv.ArrangeCardsResponseHandler.prototype.checkResponse = function() {
+  if (!this.hasCards) {
+    this.clearChoices();
+    this.showCardChoices();
+  }
+  if (this.hasCards) {
+    var response_data = {cards: this.cards};
+    var response = {
+      response_type: this.responseType,
+      response_data: response_data
+    };
+    csrv.sendChoice(this.choiceIndex, response);
+  }
+};
+
+csrv.ArrangeCardsResponseHandler.prototype.setCards = function(cards) {
+  this.cards = cards;
+  this.hasCards = true;
+  this.checkResponse();
+};
+
+csrv.ArrangeCardsResponseHandler.prototype.showCardChoices = function() {
+  var browser = new csrv.CardBrowser();
+  browser.show({
+    message: 'Arrange cards from top (left) to bottom (right)',
+    cards: this.cardChoices(),
+    callback: this.setCards.bind(this),
+    allowSelect: false,
+    sortable: true
+  });
+};
+
+csrv.ArrangeCardsResponseHandler.prototype.cardChoices = function() {
+  var cardIds = this.choice.validResponseOptions['cards'];
+  var cards = [];
+  for (var i = 0; i < cardIds.length; i++) {
+    cards.push(csrv.gameRegistry[cardIds[i]]);
+  }
+  return cards;
 };
 
 csrv.ArchivesCardsResponseHandler = function(choice) {
@@ -998,7 +1045,9 @@ csrv.handleChoice = function(choice) {
     case 'HeapCardRequest':
       return new csrv.HeapCardsResponseHandler(choice);
       break;
-
+    case 'ArrangeCardsRequest':
+      return new csrv.ArrangeCardsResponseHandler(choice);
+      break
   }
   console.log('choice of last resort');
   csrv.sendChoice(choice.index, response);
