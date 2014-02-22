@@ -51,6 +51,7 @@ class Card01100(operation.Operation):
             bool(self.advanceable_cards()))
 
   def advanceable_cards(self):
+    # TODO(mrroach): stop repeating this. Move it somewhere sensible
     targets = []
     for server in self.game.corp.servers:
       for card in server.ice.cards + server.installed.cards:
