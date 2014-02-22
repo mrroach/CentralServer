@@ -24,6 +24,7 @@ from card01076 import Card01076
 from card01077 import Card01077
 from card01078 import Card01078
 from card01079 import Card01079
+from card01080 import Card01080
 from card01081 import Card01081
 from card01082 import Card01082
 from card01083 import Card01083

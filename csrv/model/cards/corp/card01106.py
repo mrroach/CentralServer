@@ -13,6 +13,7 @@ class RezIcePhase(timing_phases.BasePhase):
   """Rez a piece of ice ignoring all costs."""
 
   NULL_OK = True
+  NULL_CHOICE = 'Do not rez any ice'
 
   def choices(self, refresh=False):
     actions = []
@@ -23,12 +24,10 @@ class RezIcePhase(timing_phases.BasePhase):
               RezIce(self.game, self.player, ice))
     return actions
 
-  def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
-    actions.Action.resolve(
-        self, response,
-        ignore_clicks=ignore_clicks,
-        ignore_all_costs=ignore_all_costs)
-    self.end_phase()
+  def resolve(self, choice, response=None):
+    timing_phases.BasePhase.resolve(self, choice, response=response)
+    if choice:
+      self.end_phase()
 
 
 class Card01106(agenda.Agenda):

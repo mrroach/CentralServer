@@ -29,8 +29,8 @@ class PhaseMeta(type):
   def __new__(mcs, name, bases, new_attrs):
 
     # ThingHappensPhase.choices_method => 'thing_happens_phase_choices'
-    if 'description' not in new_attrs:
-      new_attrs['description'] = new_attrs['__doc__']
+    if 'DESCRIPTION' not in new_attrs:
+      new_attrs['DESCRIPTION'] = new_attrs['__doc__']
     if 'choices_method' not in new_attrs or not new_attrs['choices_method']:
       new_attrs['choices_method'] = (
           UNDERSCORE_RE.sub(r'_\1', name).lower() + '_choices')
@@ -49,7 +49,7 @@ class BasePhase(game_object.GameObject):
   __metaclass__ = PhaseMeta
 
   NULL_OK = True
-  NULL_NAME = 'Do nothing'
+  NULL_CHOICE = 'Do nothing'
 
   def __init__(self, game, player, both_players=True):
     game_object.GameObject.__init__(self, game)
@@ -112,6 +112,14 @@ class BasePhase(game_object.GameObject):
             self._choices.append(choice)
     return self._choices
 
+  @property
+  def null_choice(self):
+    return self.NULL_CHOICE
+
+  @property
+  def description(self):
+    return self.DESCRIPTION
+
   def resolve(self, choice, response=None):
     """Perform the given choice, and repeat self phase if more choices exist."""
     if choice:
@@ -149,7 +157,7 @@ class OldBasePhase(game_object.PlayerObject):
   __metaclass__ = PhaseMeta
 
   NULL_OK = True
-  NULL_NAME = 'Do nothing'
+  NULL_CHOICE = 'Do nothing'
 
   def __init__(self, game, player):
     game_object.PlayerObject.__init__(self, game, player)
@@ -236,8 +244,7 @@ class OldBasePhase(game_object.PlayerObject):
 
 class CorpGameSetup(BasePhase):
   """The corp draws a starting hand and credits."""
-
-  NULL_NAME = 'Keep current hand.'
+  NULL_CHOICE = 'Keep current hand.'
 
 
 class CorpTurnAbilities(BasePhase):
@@ -245,6 +252,8 @@ class CorpTurnAbilities(BasePhase):
 
   This phase is made of several sub-phases.
   """
+  NULL_CHOICE = 'Done using abilities. Pass.'
+
   def __init__(self, game, player):
     BasePhase.__init__(self, game, player)
     self.round_count = {
@@ -258,13 +267,6 @@ class CorpTurnAbilities(BasePhase):
         CorpScoreAgendas(game, game.corp, both_players=False),
         CorpUseAbilities(game, game.corp, both_players=False),
     ]
-
-  @property
-  def description(self):
-    if str(self.player) == 'corp':
-      return 'Rez cards, score agendas, use abilities'
-    else:
-      return 'Use abilities'
 
   def choices(self, refresh=False):
     """Gather the available choices for self phase.
@@ -368,8 +370,10 @@ class CorpTurnDiscard(BasePhase):
   """The corp must discard down to max hand size."""
   NULL_OK = False
 
+
 class RunnerGameSetup(BasePhase):
-  """The corp draws a starting hand and credits."""
+  """The runner draws a starting hand and credits."""
+  NULL_CHOICE = 'Keep current hand.'
 
 
 class RunnerTurnAbilities(CorpTurnAbilities):
@@ -438,6 +442,7 @@ class RunEvent(BasePhase):
 
 class ApproachIce_2_1(CorpTurnAbilities):
   """The runner approaches a piece of ice."""
+  DESCRIPTION = 'Approaching ice - abilities window'
   # paid abilities
 
   def __init__(self, game, player, run):
@@ -456,12 +461,11 @@ class ApproachIce_2_1(CorpTurnAbilities):
 
 class ApproachIce_2_2(BasePhase):
   """The runer approaches a piece of ice."""
-  # The runner jacks out or continues (can't jack out on first approached)
-
+  DESCRIPTION = 'Approaching ice - decide whether to continue'
   NULL_OK = False
 
   def __init__(self, game, player, run):
-    BasePhase.__init__(self, game, player)
+    BasePhase.__init__(self, game, player, both_players=False)
     self.run = run
 
   def resolve(self, choice, response=None):
@@ -470,8 +474,7 @@ class ApproachIce_2_2(BasePhase):
 
 class ApproachIce_2_3(CorpTurnAbilities):
   """The runer approaches a piece of ice."""
-  # Approached ice can be rezzed, paid abilities can be used, non-ice cards rezzed
-  # If rezzed, go to 3. if unrezzed and more ice, go to 2, else go to 6
+  DESCRIPTION = 'Approach ice - ice can be rezzed, rez/abilities window'
 
   def __init__(self, game, player, run):
     CorpTurnAbilities.__init__(self, game, player)
@@ -492,7 +495,6 @@ class ApproachIce_2_3(CorpTurnAbilities):
 
 class EncounterIce_3(BasePhase):
   """The runner encounters a rezzed piece of ice."""
-  # 'When encountered' conditionals happen here
 
   def end_phase(self):
     BasePhase.end_phase(self)
@@ -500,10 +502,8 @@ class EncounterIce_3(BasePhase):
 
 class EncounterIce_3_1(BasePhase):
   """The runner encounters a rezzed piece of ice."""
-  # Icebreakers can interact, paid abilities can be used
-
-  SHORT_DESC = 'Encounter ice: interact'
-  DESCRIPTION = 'Icebreakers can interact, paid abilities can be used'
+  DESCRIPTION = 'Encounter ice - icebreakers can interact, abilities window'
+  NULL_CHOICE = 'Done using icebreakers/abilities. Pass.'
 
   def __init__(self, game, player, run):
     BasePhase.__init__(self, game, player)
@@ -515,11 +515,8 @@ class EncounterIce_3_1(BasePhase):
 
 class EncounterIce_3_2(BasePhase):
   """The runner encounters a rezzed piece of ice."""
-  # Resolve all unbroken subroutines. either run ends (go to 6) or more ice (go to 2)
-  # or no more ice (go to 4)
-
-  SHORT_DESC = 'Encounter ice'
-  DESCRIPTION = 'The runner encounters a rezzed piece of ice.'
+  DESCRIPTION = 'Encounter ice - resolve unbroken subroutines'
+  NULL_OK = False
 
   def __init__(self, game, player, run):
     BasePhase.__init__(self, game, player)
@@ -532,9 +529,7 @@ class EncounterIce_3_2(BasePhase):
 class ApproachServer_4_1(CorpTurnAbilities):
   """The runner approaches an attacked server."""
 
-  SHORT_DESC = 'Abilities may be used'
-  DESCRIPTION = 'Approach server: abilities may be used, cards may be rezzed.'
-  DEFAULT = 'Do not use abilities'
+  DESCRIPTION = 'Approach server - rez/abilities window'
 
   def __init__(self, game, player, run):
     CorpTurnAbilities.__init__(self, game, player)
@@ -548,9 +543,7 @@ class ApproachServer_4_1(CorpTurnAbilities):
 class ApproachServer_4_2(BasePhase):
   """The runner approaches an attacked server."""
 
-  SHORT_DESC = 'Approach server'
-  DESCRIPTION = 'Approach server: The runner decides whether to continue.'
-
+  DESCRIPTION = 'Approaching server - decide whether to continue'
   NULL_OK = False
 
   def __init__(self, game, player, run):
@@ -561,9 +554,7 @@ class ApproachServer_4_2(BasePhase):
 class ApproachServer_4_3(CorpTurnAbilities):
   """The runner approaches an attacked server."""
 
-  SHORT_DESC = 'Approach server'
-  DESCRIPTION = 'Approach server: abilities may be used, cards may be rezzed.'
-  DEFAULT = 'Do not use abilities'
+  DESCRIPTION = 'Approaching server - rez/abilities window'
 
   def __init__(self, game, player, run):
     CorpTurnAbilities.__init__(self, game, player)
@@ -578,8 +569,8 @@ class ApproachServer_4_3(CorpTurnAbilities):
 class ApproachServer_4_4(BasePhase):
   """The runner approaches an attacked server."""
 
-  SHORT_DESC = 'The run is successful.'
   DESCRIPTION = 'The run is successful.'
+  NULL_CHOICE = 'Begin access'
 
   def __init__(self, game, player, run):
     BasePhase.__init__(self, game, player)
@@ -593,8 +584,7 @@ class ApproachServer_4_4(BasePhase):
 class ApproachServer_4_5_Begin(BasePhase):
   """The runner accesses cards in the attacked server."""
 
-  SHORT_DESC = 'Begin access'
-  DESCRIPTION = 'The runner accesses cards in the attacked server.'
+  DESCRIPTION = 'Access cards in the attacked server'
 
   def __init__(self, game, player, run):
     BasePhase.__init__(self, game, player)
@@ -615,12 +605,8 @@ class SelectAccessPhase(BasePhase):
 
 class ApproachServer_4_5(BasePhase):
   """The runner accesses cards in the attacked server."""
-  # if the runner accesses an agenda, they steal it
-  # if they access a trashable card, they can trash it
-  # if there's something with an on-access effect, it happens
 
-  SHORT_DESC = 'Choose cards to access'
-  DESCRIPTION = 'The runner accesses cards in the attacked server.'
+  DESCRIPTION = 'Access cards in the attacked server'
   NULL_OK = False
 
   def __init__(self, game, player, run):
@@ -647,8 +633,8 @@ class ApproachServer_4_5(BasePhase):
 class EndAccess(BasePhase):
   """All cards have been accessed. The run ends."""
 
-  SHORT_DESC = 'The run ends'
   DESCRIPTION = 'The run ends successfully.'
+  NULL_CHOICE = 'Complete the run'
 
   def begin(self):
     BasePhase.begin(self)
@@ -658,13 +644,17 @@ class EndAccess(BasePhase):
 class AccessCard(BasePhase):
   """Access a card in a server"""
 
-  SHORT_DESC = 'Access a card'
-  DESCRIPTION = 'The runner accesses a card in the server.'
+  DESCRIPTION = 'Access a card'
+  NULL_CHOICE = 'Done accessing'
 
   def __init__(self, game, player, card):
     BasePhase.__init__(self, game, player, both_players=False)
     self.card = card
     self._access_initiated = False
+
+  @property
+  def null_choice(self):
+    return '%s %s' % (self.NULL_CHOICE, self.card)
 
   def begin(self):
     BasePhase.begin(self)

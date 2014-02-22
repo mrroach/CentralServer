@@ -4,7 +4,7 @@ from csrv.model.cards import card_info
 from csrv.model.cards import identity
 
 
-class Card01080(identity.CorpIdentity):
+class Card01080(identity.Identity):
 
   NAME = u'Card01080'
   SET = card_info.CORE

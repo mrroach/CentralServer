@@ -15,11 +15,11 @@ class Player(game_object.GameObject):
   def __init__(self, game, deck):
     game_object.GameObject.__init__(self, game)
     self.deck = deck
-    self.identity = deck.identity(game, self)
     self.agenda_points = 0
     self.credits = pool.MainCreditPool(game, self, 0)
     self.credit_pools = set()
     self.clicks = pool.ClickPool(game, self, 0)
+    self.identity = deck.identity(game, self)
 
   def find_pools(self, *appropriations):
     # This is going to have to take into account "in this server" stuff.

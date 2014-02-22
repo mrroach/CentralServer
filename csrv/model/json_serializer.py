@@ -14,12 +14,15 @@ def render_choices(game, secret=False):
   phase = game.current_phase()
   data = {
       'phase': phase.__class__.__name__,
+      'description': phase.description,
       'player': str(phase.player),
   }
   if not secret:
     choices = phase.choices()
     data['choices'] = [render_choice(c) for c in choices]
     data['null_ok'] = phase.NULL_OK
+    if phase.NULL_OK:
+      data['null_choice'] = phase.null_choice
   return data
 
 def serialize_choices(game, secret=False):

@@ -47,8 +47,10 @@ csrv.Choices.prototype.fastModeDisable = function() {
 
 csrv.Choices.prototype.update = function(choices) {
   this.phase = choices['phase'];
+  this.description = choices['description'];
   this.player = choices['player'];
   this.nullOk = choices['null_ok'];
+  this.nullChoice = choices['null_choice'];
 
   for (var i = 0; i < this.allChoices.length; i++) {
     this.allChoices[i].remove();
@@ -144,7 +146,7 @@ csrv.Choices.prototype.handleAutoActions = function() {
 csrv.Choices.prototype.render = function() {
   var choiceDiv = $('#choices');
   choiceDiv.empty();
-  choiceDiv.append($('<h3>', {text: this.phase.replace(/([A-Z])/g, ' $1')}));
+  choiceDiv.append($('<h3>', {text: this.description.replace(/([A-Z])/g, ' $1')}));
 
   for (var i = 0; i < this.globalChoices.length; i++) {
     choiceDiv.append(this.globalChoices[i].asLink());
@@ -160,7 +162,7 @@ csrv.Choices.prototype.render = function() {
     /* Use the slower option for resolving empty choices */
     if (this.nullOk) {
       var nullChoice = new csrv.Choice(null, {
-        description: 'Do nothing',
+        description: this.nullChoice,
         request: 'NullRequest',
         cost: null});
       choiceDiv.append(nullChoice.asLink());
