@@ -1,4 +1,5 @@
 from csrv.model import events
+from csrv.model import timing_phases
 
 from csrv.model.cards import agenda
 from csrv.model.cards import card_info

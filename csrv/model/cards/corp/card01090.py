@@ -1,4 +1,5 @@
 from csrv.model import actions
+from csrv.model import cost
 from csrv.model import events
 from csrv.model import timing_phases
 from csrv.model.actions import subroutines
@@ -10,7 +11,7 @@ class LoseCredits(actions.Action):
   DESCRIPTION = 'Pay 3 [credits]'
 
   def __init__(self, game, player, card=None):
-    cost_obj = cost.Cost(credits=3)
+    cost_obj = cost.Cost(game, player, credits=3)
     action.Action.__init__(self, game, player, card=card, cost=cost_obj)
     self._is_mandatory = True
     self.paid = False
@@ -20,7 +21,7 @@ class LoseCredits(actions.Action):
         self,
         ignore_clicks=ignore_clicks,
         ignore_all_costs=ignore_all_costs)
-    self.card.log('The runner pays 3[credits] for tollbooth')
+    self.card.log('The runner pays 3[credits] for Card01090')
     self.paid = True
 
   def is_usable(self):

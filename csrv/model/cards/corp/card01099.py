@@ -27,4 +27,4 @@ class Card01099(operation.Operation):
 
   def play(self):
     self.game.insert_next_phase(
-        timing_phases.TakeMeatDamage(self.game, self.runner, 4))
+        timing_phases.TakeMeatDamage(self.game, self.game.runner, 4))

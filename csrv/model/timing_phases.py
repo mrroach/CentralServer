@@ -476,7 +476,9 @@ class ApproachIce_2_2(BasePhase):
 
 class ApproachIce_2_3(CorpTurnAbilities):
   """The runer approaches a piece of ice."""
+  PHASE_TITLE = 'Approach ice'
   DESCRIPTION = 'Approach ice - ice can be rezzed, rez/abilities window'
+  NULL_CHOICE = 'Done rezzing ice/using abilities'
 
   def __init__(self, game, player, run):
     CorpTurnAbilities.__init__(self, game, player)

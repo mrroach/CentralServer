@@ -19,7 +19,8 @@ class Card01028RunAction(actions.MakeARunAction):
 
   @property
   def description(self):
-    return self.card01028.TEXT
+    return ('[click]: Make a run on archives, if successful, treat as '
+            'a successful run on R&D')
 
 
 class Card01028(program.Program):
