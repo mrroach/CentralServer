@@ -9,7 +9,7 @@ from csrv.model import premade_decks
 
 class TestBase(unittest.TestCase):
   CORP_DECK = 'RoboCorp Core'
-  RUNNER_DECK = 'Anarch Core'
+  RUNNER_DECK = 'Anarchist Core'
 
   def setUp(self):
     corp_info = [d for d in premade_decks.corp_decks

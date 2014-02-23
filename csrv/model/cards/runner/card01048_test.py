@@ -9,7 +9,7 @@ from csrv.model.cards.runner import card01048
 
 
 class TestCard01048(test_base.TestBase):
-  RUNNER_DECK = 'Shaper Core'
+  RUNNER_DECK = 'Maker Core'
 
   def setUp(self):
     test_base.TestBase.setUp(self)

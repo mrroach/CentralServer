@@ -41,10 +41,9 @@ class Card01028(program.Program):
 
   def build_actions(self):
     program.Program.build_actions(self)
-    self._card01028_action = Card01028RunAction(self.game, self.player, self)
 
   def card01028_actions(self):
-    return [self._card01028_action]
+    return [Card01028RunAction(self.game, self.player, self)]
 
   def setup_card01028(self):
     self.game.register_listener(events.ApproachServer_4_4, self)

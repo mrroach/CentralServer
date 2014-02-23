@@ -58,7 +58,7 @@ corp_decks = [
 ]
 
 runner_decks = [
-    {'name': 'Anarch Core',
+    {'name': 'Anarchist Core',
      'identity': 'Card01001',
      'cards': [
          'Card01004', 'Card01004', 'Card01004', 'Card01050', 'Card01050',
@@ -72,7 +72,21 @@ runner_decks = [
          'Card01052', 'Card01052', 'Card01052', 'Card01053', 'Card01053',
          'Card01053', 'Card01015',
     ]},
-    {'name': 'Shaper Core',
+    {'name': 'Crook Core',
+      'identity': 'Card01017',
+      'cards': [
+          'Card01018', 'Card01018', 'Card01019', 'Card01019', 'Card01019',
+          'Card01020', 'Card01020', 'Card01020', 'Card01021', 'Card01021',
+          'Card01021', 'Card01022', 'Card01022', 'Card01022', 'Card01023',
+          'Card01023', 'Card01024', 'Card01025', 'Card01025', 'Card01026',
+          'Card01026', 'Card01027', 'Card01027', 'Card01028', 'Card01028',
+          'Card01029', 'Card01029', 'Card01030', 'Card01030', 'Card01031',
+          'Card01032', 'Card01032', 'Card01049', 'Card01049', 'Card01049',
+          'Card01050', 'Card01050', 'Card01050', 'Card01051', 'Card01051',
+          'Card01051', 'Card01052', 'Card01052', 'Card01052', 'Card01053',
+          'Card01053', 'Card01053',
+    ]},
+    {'name': 'Maker Core',
      'identity': 'Card01033',
      'cards': [
          'Card01034', 'Card01034', 'Card01034', 'Card01035', 'Card01035',
