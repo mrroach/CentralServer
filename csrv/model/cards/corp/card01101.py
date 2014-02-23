@@ -14,12 +14,17 @@ class Card01101Cost(cost.RezIceCost):
             self.player.scored_agendas.size)
 
   def pay(self, response=None, ignore_clicks=False):
+    print response
+    print response.agenda
     if not response or not response.agenda:
       raise errors.CostNotSatisfied('You must forfeit an agenda to rez Card01101')
     if not response.agenda.location == self.player.scored_agendas:
       raise errors.InvalidResponse('You must forfeit a scored agenda')
     cost.RezIceCost.pay(self, response=response, ignore_clicks=ignore_clicks)
+    # TODO(mrroach): This should probably happen automatically when an agenda
+    # is removed from the score area. probably via on_enter_*_score_area
     self.player.scored_agendas.remove(response.agenda)
+    self.player.agenda_points -= response.agenda.agenda_points
 
 
 class RezCard01101(actions.RezIce):

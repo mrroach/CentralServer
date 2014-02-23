@@ -16,6 +16,7 @@ class RezIce(action.Action):
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
     action.Action.resolve(
         self,
+        response=response,
         ignore_clicks=ignore_clicks,
         ignore_all_costs=ignore_all_costs)
     self.card.log('The corp rezzes %s' % self.card)

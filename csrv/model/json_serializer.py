@@ -121,6 +121,7 @@ def serialize_card(card, hidden=False):
       'is_rezzed': card.is_rezzed,
       'is_faceup': card.is_faceup,
       'advancement_tokens': card.advancement_tokens,
+      'agenda_counters': card.agenda_counters,
       'credits': card.credits,
       'virus_counters': card.virus_counters,
       'game_id': card.game_id,

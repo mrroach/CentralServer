@@ -203,6 +203,7 @@ csrv.Corp = function(game) {
   this.hq = new csrv.Server({serverType: 'hq'});
   this.remotes = {};
   this.hand = new csrv.CorpHand();
+  this.scoredAgendas = null;
   this.agendaPoints = 0;
   this.badPublicity = 0;
   this.clicks = 0;
@@ -222,6 +223,8 @@ csrv.Corp.prototype.update = function(corpState) {
   this.archives.update(corpState['archives']);
   this.rnd.update(corpState['rnd']);
   this.hq.update(corpState['hq'], corpState['identity']);
+  this.scoredAgendas = csrv.updateCardArray(
+      this, this.scoredAgendas, corpState['scored_agendas']);
 
   for (var i = 0; i < corpState['remotes'].length; i++) {
     var remote = corpState['remotes'][i];
@@ -286,6 +289,7 @@ csrv.Runner = function() {
   this.rig = null;
   this.stack = null;
   this.heap = null;
+  this.scoredAgendas = null;
   this.hand = new csrv.RunnerHand();
   this.clicks = 0;
   this.credits = 0;
@@ -310,6 +314,8 @@ csrv.Runner.prototype.update = function(runnerState) {
   this.agendaPoints = runnerState['agenda_points'];
   this.tags = runnerState['tags'];
 
+  this.scored_agendas = csrv.updateCardArray(
+      this, this.scoredAgendas, runnerState['scored_agendas']);
   this.rig = csrv.updateCardArray(this, this.rig, runnerState['rig']);
   this.stack = csrv.updateCardArray(this, this.stack, runnerState['stack']);
   this.heap = csrv.updateCardArray(this, this.heap, runnerState['heap']);

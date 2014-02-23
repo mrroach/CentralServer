@@ -690,6 +690,61 @@ csrv.InstallHardwareResponseHandler.prototype.checkResponse = function() {
   }
 };
 
+csrv.ForfeitAgendaResponseHandler = function(choice) {
+  csrv.ChoiceHandler.call(this, choice, 'ForfeitAgendaResponse');
+  this.toForfeit = null;
+  this.hasForfeit = false;
+  this.forfeitChoices = [];
+  this.checkResponse();
+};
+csrv.ForfeitAgendaResponseHandler.prototype = new csrv.ChoiceHandler();
+csrv.ForfeitAgendaResponseHandler.prototype.constructor =
+    csrv.ForfeitAgendaResponseHandler;
+
+csrv.ForfeitAgendaResponseHandler.prototype.checkResponse = function() {
+  if (!this.hasForfeit) {
+    this.clearChoices();
+    this.showForfeitChoices(
+        this.choice.validResponseOptions['agendas']);
+  }
+  if (this.hasForfeit) {
+    var response = {
+      response_type: this.responseType,
+      response_data: {
+        agenda: this.toForfeit
+      }
+    };
+    console.log(response);
+    csrv.sendChoice(this.choiceIndex, response);
+  }
+};
+
+csrv.ForfeitAgendaResponseHandler.prototype.showForfeitChoices =
+    function(agendas) {
+  var choiceDiv = $('#choices');
+  console.log(agendas);
+  choiceDiv.append($('<h3>', {text: 'Choose an agenda'}));
+  this.forfeitChoices = []
+  csrv.destroyTooltip();
+  for (var i = 0; i < agendas.length; i++) {
+    var card = csrv.gameRegistry[agendas[i]];
+    console.log(card);
+    if (card) {
+      var choice = new csrv.ResponseChoice(
+          'Forfeit ' + card.name + ' (' + card.agendaCounters + ' counters)',
+          this.setForfeitChoice.bind(this), agendas[i]);
+      this.forfeitChoices.push(choice);
+      choiceDiv.append(choice.asLink());
+    }
+  }
+  csrv.createTooltip();
+};
+
+csrv.ForfeitAgendaResponseHandler.prototype.setForfeitChoice = function(cardId) {
+  this.hasForfeit = true;
+  this.toForfeit = cardId;
+  this.checkResponse();
+};
 
 csrv.ResponseChoice = function(description, callback, value) {
   this.description = description;
@@ -703,6 +758,16 @@ csrv.ResponseChoice.prototype.descriptionHtml = function() {
 
 csrv.ResponseChoice.prototype.resolve = function() {
   this.callback(this.value);
+};
+
+csrv.ResponseChoice.prototype.asLink = function() {
+  var self = this;
+  var choose = function(event) {
+    self.callback(self.value);
+   };
+  var link = $('<a>', {href: '#', html: this.description});
+  link.click(choose);
+  return link;
 };
 
 csrv.VariableCreditCostResponseHandler = function(choice) {
