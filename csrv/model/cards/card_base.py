@@ -208,6 +208,10 @@ class CardBase(game_object.PlayerObject):
     else:
       return cls.INFLUENCE
 
+  def forfeit_agenda_targets(self):
+    """Agendas that may be forfeited."""
+    return list(self.player.scored_agendas.cards)
+
   def _setup_choices(self, state):
     for timing_phase, method in getattr(
         self, 'WHEN_%s_PROVIDES_CHOICES_FOR' % state).iteritems():

@@ -252,6 +252,7 @@ class CorpTurnAbilities(BasePhase):
 
   This phase is made of several sub-phases.
   """
+  DESCRIPTION = 'rez/score/abilities window'
   NULL_CHOICE = 'Done using abilities. Pass.'
 
   def __init__(self, game, player):
@@ -378,6 +379,7 @@ class RunnerGameSetup(BasePhase):
 
 class RunnerTurnAbilities(CorpTurnAbilities):
   """The corp may rez cards; both player may use paid abilities."""
+  DESCRIPTION = 'rez/abilities window'
 
   def __init__(self, game, player):
     BasePhase.__init__(self, game, player)
@@ -569,7 +571,7 @@ class ApproachServer_4_3(CorpTurnAbilities):
 class ApproachServer_4_4(BasePhase):
   """The runner approaches an attacked server."""
 
-  DESCRIPTION = 'The run is successful.'
+  DESCRIPTION = 'The run is successful'
   NULL_CHOICE = 'Begin access'
 
   def __init__(self, game, player, run):
@@ -633,7 +635,7 @@ class ApproachServer_4_5(BasePhase):
 class EndAccess(BasePhase):
   """All cards have been accessed. The run ends."""
 
-  DESCRIPTION = 'The run ends successfully.'
+  DESCRIPTION = 'The run ends successfully'
   NULL_CHOICE = 'Complete the run'
 
   def begin(self):
@@ -672,7 +674,7 @@ class ResolveSubroutine(BasePhase):
   NULL_OK = False
 
   SHORT_DESC = 'Resolve ice subroutine'
-  DESCRIPTION = 'An ice subroutine resolves.'
+  DESCRIPTION = 'An ice subroutine resolves'
 
   def __init__(self, game, player, run, subroutine):
     BasePhase.__init__(self, game, player, both_players=False)

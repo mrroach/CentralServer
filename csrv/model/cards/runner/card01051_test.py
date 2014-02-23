@@ -61,7 +61,6 @@ class TestCard01051(unittest.TestCase):
     # Get past 3.1 and 3.2
     self.game.resolve_current_phase(None, None)
     self.game.resolve_current_phase(None, None)
-    self.game.resolve_current_phase(None, None)
 
     self.assertIsInstance(
         self.game.current_phase(), timing_phases.TrashAProgram)

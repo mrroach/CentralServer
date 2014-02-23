@@ -287,6 +287,13 @@ class ForfeitAgendaResponse(Response):
 class ForfeitAgendaRequest(Request):
   RESPONSE_CLASS = ForfeitAgendaResponse
 
+  def valid_response_options(self):
+    agendas = self.card.forfeit_agenda_targets()
+
+    return {
+        'agendas': [a.game_id for a in agendas],
+    }
+
 
 class NumericChoiceResponse(Response):
   def __init__(self):

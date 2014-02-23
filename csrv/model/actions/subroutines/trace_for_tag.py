@@ -1,3 +1,4 @@
+from csrv.model import timing_phases
 from csrv.model.actions.subroutines import trace
 
 

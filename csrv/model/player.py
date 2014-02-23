@@ -51,6 +51,8 @@ class RunnerPlayer(Player):
   LISTENS = [
       events.BeginRunnerGameSetup,
       events.BeginRunnerTurnBegin,
+      events.RunBegins,
+      events.RunEnds,
   ]
 
   PROVIDES_CHOICES_FOR = {
@@ -76,6 +78,7 @@ class RunnerPlayer(Player):
     ]
     self._brain_damage = 0
     self._brain_damage_modifier = None
+    self._bad_pub_pool = None
 
     for card in self.deck.cards:
       self.stack.add(card(self.game, self))
@@ -86,6 +89,22 @@ class RunnerPlayer(Player):
   # The order in which the event fires doesn't work right for this
   def on_begin_runner_game_setup(self, event, sender):
     self.draw_starting_hand_and_credits(mulligan=False)
+
+  def on_run_begins(self, sender, event):
+    if self.game.corp.bad_publicity:
+      self.game.log(
+          'The runner gains %s temporary [credits] from bad publicity' %
+          self.game.corp.bad_publicity)
+      self._bad_pub_pool = pool.EphemeralCreditPool(
+          self.game, self, self.game.corp.bad_publicity)
+      self.credit_pools.add(self._bad_pub_pool)
+
+  def on_run_ends(self, sender, event):
+    if self._bad_pub_pool:
+      self.game.log('%s bad publicity [credits] were returned' %
+                    self._bad_pub_pool.value)
+      self.credit_pools.remove(self._bad_pub_pool)
+      self._bad_pub_pool = None
 
   def draw_starting_hand_and_credits(self, mulligan=True):
     if mulligan:

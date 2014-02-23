@@ -1049,7 +1049,10 @@ csrv.handleChoice = function(choice) {
       break;
     case 'ArrangeCardsRequest':
       return new csrv.ArrangeCardsResponseHandler(choice);
-      break
+      break;
+    case 'ForfeitAgendaRequest':
+      return new csrv.ForfeitAgendaResponseHandler(choice);
+      break;
   }
   console.log('choice of last resort');
   csrv.sendChoice(choice.index, response);
