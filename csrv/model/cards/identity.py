@@ -29,7 +29,7 @@ class Identity(card_base.CardBase):
 
   @property
   def minimum_deck_size(self):
-    return self.MAX_DECK_SIZE
+    return self.MIN_DECK_SIZE
 
 class CorpIdentity(Identity):
   """A corp identity card."""

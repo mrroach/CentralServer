@@ -32,7 +32,10 @@ class Card01037Action(actions.Action):
 
   @property
   def description(self):
-    return 'Add sentry code gate, and barrier to %s' % self.card
+    if self.card.is_faceup:
+      return 'Add sentry, code gate, and barrier to %s' % self.card
+    else:
+      return 'Add sentry, code gate, and barrier to ice'
 
 
 class Card01037(event.Event):

@@ -32,9 +32,9 @@ csrv.destroyTooltip = function() {
 
 csrv.setupInfoBar = function() {
   if (csrv.side == 'corp') {
-    $('#corp_info').insertBefore('#choices');
+    $('#corp_info').insertBefore('#choice-title');
   } else {
-    $('#runner_info').insertBefore('#choices');
+    $('#runner_info').insertBefore('#choice-title');
   }
 };
 

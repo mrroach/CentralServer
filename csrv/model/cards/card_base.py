@@ -33,12 +33,17 @@ class CardBase(game_object.PlayerObject):
 
   __metaclass__ = CardMeta
 
-  TYPE = card_info.UNKNOWN
-  REZZABLE = False
-  INFLUENCE = 0
+  ADVANCEMENT_REQUIREMENT = None
   AGENDA_POINTS = 0
-  MEMORY = 0
+  COST = 0
+  FACTION = None
+  INFLUENCE = 0
   KEYWORDS = set()
+  MEMORY = 0
+  NAME = None
+  REZZABLE = False
+  STRENGTH = 0
+  TYPE = card_info.UNKNOWN
 
   # Which timing phases this card provides choices for
   # based on the state/location of the card at the time
@@ -122,6 +127,10 @@ class CardBase(game_object.PlayerObject):
     self._agenda_counters = value
 
   agenda_counters = property(get_agenda_counters, set_agenda_counters)
+
+  @property
+  def agenda_points(self):
+    return self.AGENDA_POINTS
 
   def get_power_counters(self):
     return self._power_counters

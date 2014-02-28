@@ -70,6 +70,7 @@ class Modifier(game_object.GameObject):
       setattr(self, until.callback, self.on_removal_event)
       self.game.register_listener(until, self)
     if self.EVENT:
+      # pylint: disable=E1102
       self.trigger_event(self.EVENT(self.game, None))
 
   @property
@@ -87,16 +88,19 @@ class Modifier(game_object.GameObject):
   def increase(self, amt):
     self.value += amt
     if self.EVENT:
+      # pylint: disable=E1102
       self.trigger_event(self.EVENT(self.game, None))
 
   def decrease(self, amt):
     self.value -= amt
     if self.EVENT:
+      # pylint: disable=E1102
       self.trigger_event(self.EVENT(self.game, None))
 
   def set_value(self, amt):
     self.value = amt
     if self.EVENT:
+      # pylint: disable=E1102
       self.trigger_event(self.EVENT(self.game, None))
 
   def remove(self):
@@ -111,6 +115,7 @@ class Modifier(game_object.GameObject):
       else:
         self.global_scope.remove(self)
       if self.EVENT:
+        # pylint: disable=E1102
         self.trigger_event(self.EVENT(self.game, None))
     except KeyError:
       # There can be unpredictable dependencies such that it's impossible

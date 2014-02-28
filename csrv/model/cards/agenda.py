@@ -33,10 +33,6 @@ class Agenda(installable_card.InstallableCard):
   def advancement_requirement(self):
     return self.ADVANCEMENT_REQUIREMENT
 
-  @property
-  def agenda_points(self):
-    return self.AGENDA_POINTS
-
   def can_score(self):
     return self.advancement_tokens >= self.advancement_requirement
 

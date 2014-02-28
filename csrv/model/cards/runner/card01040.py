@@ -1,4 +1,5 @@
 from csrv.model import actions
+from csrv.model import errors
 from csrv.model import events
 from csrv.model import modifiers
 from csrv.model.cards import card_info
@@ -14,7 +15,7 @@ class InstallCard01040(actions.InstallHardware):
 
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
     if not response or not response.host:
-      raise errors.InvalidResponseError(
+      raise errors.InvalidResponse(
           'You must choose a host for Card01040')
     actions.InstallHardware.resolve(
         self, response, ignore_clicks=ignore_clicks,

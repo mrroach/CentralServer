@@ -33,6 +33,7 @@ class Response(object):
 
 
 class Request(game_object.GameObject):
+  RESPONSE_CLASS = Response
 
   def __init__(self, game, card=None):
     game_object.GameObject.__init__(self, game)
@@ -135,70 +136,6 @@ class InstallUpgradeResponse(InstallAgendaAssetUpgradeResponse):
 
 class InstallUpgradeRequest(InstallAgendaAssetUpgradeRequest):
   RESPONSE_CLASS = InstallUpgradeResponse
-
-
-class PaymentSourceResponse(object):
-
-  def __init__(self):
-    self.pools = {}
-
-  def add_payment(self, pool, amt):
-    self.pools[pool] = amt
-
-  def sources_match(self, appropriations):
-    for pool in self.pools.keys():
-      if not pool.appropriations & appropriations:
-        return False
-    return True
-
-  def amount(self):
-    return sum(self.pool.values())
-
-
-class PaymentSourceRequest(object):
-  response_class = PaymentSourceResponse
-
-  def __init__(self, amt, appropriations):
-    self.amt = amt
-    self.appropriations = appropriations
-
-  def handle_response(self, response):
-    # TODO(mrroach): make this type check into a decorator
-    if not isinstance(self.response_class, response):
-      raise errors.InvalidResponseType()
-    if (response.amount() == self.amt and
-        response.sources_match(self.appropriations)):
-      self.response = response
-    else:
-      raise errors.InvalidResponse()
-
-
-class TargetAdvanceableCardsOperationResponse(object):
-  pass
-
-
-class TargetAdvanceableCardsOperationRequest(object):
-
-  response_class = TargetAdvanceableCardsOperationResponse
-
-  def __init__(self, cost, appropriations, num_cards):
-    self.payment_source_request = PaymentSourceRequest(cost)
-    self.target_advanceable_cards_request = TargetAdvanceableCardsRequest(
-        num_cards)
-
-  def handle_response(self, response):
-    self.payment_source_request.handle_response(
-        response.payment_source_response)
-    self.target_advanceable_cards_request.handle_response(
-        response.target_advanceable_cards_response)
-
-
-class TargetInstalledAssetAgendaUpgradeRequest(object):
-  pass
-
-
-class TargetInstalledIceRequest(object):
-  pass
 
 
 class TargetInstalledCorpCardResponse(Response):

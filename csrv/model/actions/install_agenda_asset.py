@@ -6,6 +6,7 @@ from csrv.model import errors
 from csrv.model import events
 from csrv.model import game_object
 from csrv.model import parameters
+from csrv.model.cards import card_info
 
 
 class InstallAgendaAsset(action.Action):
@@ -26,7 +27,8 @@ class InstallAgendaAsset(action.Action):
         raise errors.InvalidResponse(
             'Assets and agendas cannot be installed in central servers')
       to_trash = response.cards_to_trash + [
-          c for c in server.installed.cards if c.TYPE in ['Agenda', 'Asset']]
+          c for c in server.installed.cards
+          if c.TYPE in [card_info.AGENDA, card_info.ASSET]]
     else:
       server = self.player.new_remote_server()
     # do the install before removing so that the remote doesn't cease to exist

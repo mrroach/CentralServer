@@ -41,4 +41,5 @@ class Card01068(agenda.Agenda):
       return []
 
   def score(self):
+    agenda.Agenda.score(self)
     self.agenda_counters += 1

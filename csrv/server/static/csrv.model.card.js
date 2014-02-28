@@ -59,13 +59,34 @@ csrv.Card.prototype.unhilight = function() {
   }
 };
 
+csrv.Card.prototype.showRez = function() {
+  if (this.div) {
+    var rezDiv = $('<div>', {'class': 'rez'});
+    rezDiv.append($('<img>', {src: '/static/images/rez.png'}));
+    this.div.append(rezDiv);
+  }
+};
+
+csrv.Card.prototype.hideRez = function() {
+  var rezDiv = this.div.children('.rez');
+  if (rezDiv) {
+    rezDiv.remove();
+  }
+};
+
 csrv.Card.prototype.addChoice = function(choice) {
   this.choices.push(choice);
+  if (choice['type'] == 'RezIce') {
+    this.showRez();
+  }
 };
 
 csrv.Card.prototype.removeChoice = function(choice) {
   this.choices.splice(this.choices.indexOf(choice), 1);
   this.removeContextMenu();
+  if (choice['type'] == 'RezIce') {
+    this.hideRez();
+  }
   if (this.choices.length == 0 && this.div) {
     this.unhilight();
     this.div.attr('title', null);
@@ -189,6 +210,12 @@ csrv.Card.prototype.render = function() {
     this.div.addClass('run');
   } else {
     this.div.removeClass('run');
+  }
+  for (var i=0; i < this.choices.length; i++) {
+    if (this.choices[i]['type'] == 'RezIce') {
+      this.showRez();
+      break;
+    }
   }
   if (this.choices.length > 0) {
     this.hilight();

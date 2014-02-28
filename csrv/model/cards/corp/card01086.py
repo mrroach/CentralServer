@@ -1,3 +1,4 @@
+from csrv.model import timing_phases
 from csrv.model import trace
 from csrv.model.cards import card_info
 from csrv.model.cards import operation

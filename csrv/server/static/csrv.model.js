@@ -61,9 +61,6 @@ csrv.Run = function() {
 csrv.Run.prototype.update = function(runState) {
   var runState = runState || {};
   if (runState['server'] != this.server) {
-    if (!this.server) {
-      csrv.game.choices.fastModeDisable();
-    }
     var server = csrv.gameRegistry[this.server];
     if (server) {
       server.activeRun = false;
@@ -305,9 +302,6 @@ csrv.Runner.prototype.update = function(runnerState) {
   this.runnerState = runnerState;
 
   this.credits = runnerState['credits'];
-  if (csrv.side == 'corp' && this.clicks == 1 && runnerState['clicks'] == 0) {
-    csrv.game.choices.fastModeDisable();
-  }
   this.clicks = runnerState['clicks'];
   this.link = runnerState['link'];
   this.memory = runnerState['free_memory'];
@@ -326,7 +320,6 @@ csrv.Runner.prototype.update = function(runnerState) {
     this.identity.update(runnerState['identity']);
   }
 };
-
 
 csrv.Runner.prototype.render = function() {
   csrv.renderCardsInParent($('#rig'), this.rig);

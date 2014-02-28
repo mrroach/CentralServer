@@ -1,4 +1,5 @@
 from csrv.model import actions
+from csrv.model import errors
 from csrv.model import events
 from csrv.model import parameters
 from csrv.model.cards import card_info

@@ -1,4 +1,5 @@
 from csrv.model import actions
+from csrv.model import cost
 from csrv.model import events
 from csrv.model import timing_phases
 from csrv.model.actions.subroutines import trace_for_tag
@@ -77,5 +78,5 @@ class Card01089(ice.Ice):
       return []
 
   def choice_made(self):
-    for action in self._advance_Actions:
+    for action in self._advance_actions:
       action.choice_made()

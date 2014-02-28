@@ -17,6 +17,7 @@ class TrashOnAccess(action.Action):
         ignore_all_costs=ignore_all_costs)
     self.card.log('The runner trashes %s' % self.card.NAME)
     self.card.trash()
+    self.card.is_faceup = True
     self.card.on_access_end()
 
   @property

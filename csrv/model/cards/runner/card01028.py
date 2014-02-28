@@ -11,10 +11,10 @@ class Card01028RunAction(actions.MakeARunAction):
     actions.MakeARunAction.__init__(self, game, player, game.corp.archives)
     self.card01028 = card01028
 
-  def resolve(self, params=None):
+  def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
     self.card01028.setup_card01028()
     actions.MakeARunAction.resolve(
-        self, params, ignore_clicks=ignore_clicks,
+        self, response, ignore_clicks=ignore_clicks,
         ignore_all_costs=ignore_all_costs)
 
   @property

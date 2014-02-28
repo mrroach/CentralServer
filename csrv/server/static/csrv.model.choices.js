@@ -4,7 +4,7 @@ csrv.setDefaultChoiceTimer = function() {
   }
   csrv.defaultChoiceTimer = setTimeout(function() {
     $('#choices').empty();
-    $('#choices').append($('<h3>', {text: 'Nothing to do. passing'}));
+    $('#choices').append($('<h2>', {text: 'Nothing to do. passing'}));
     csrv.sendChoice(null) }, 2000);
 };
 
@@ -16,17 +16,24 @@ csrv.Choices = function(game) {
   this.serverChoices = [];
   this.globalChoices = [];
   this.allChoices = [];
-  this.fastMode = true;
   this.setupFastMode();
 };
 
 csrv.Choices.prototype.setupFastMode = function() {
   var self = this;
+  this.fastModeEnable();
+  $('#fastmode-on').change(function() {
+    if ($('#fastmode-on').prop('checked')) {
+      self.fastModeEnable();
+    } else {
+      self.fastModeDisable();
+    }
+  });
+
   $('body').keyup(function(event){
     /* catch spacebar */
     if (event.keyCode == 32){
-      self.fastMode = !self.fastMode;
-      if (self.fastMode) {
+      if (!self.fastMode) {
         self.fastModeEnable();
       } else {
         self.fastModeDisable();
@@ -37,12 +44,12 @@ csrv.Choices.prototype.setupFastMode = function() {
 
 csrv.Choices.prototype.fastModeEnable = function() {
   this.fastMode = true;
-  $('#fastmode').show('fade');
+  $('#fastmode-on').prop('checked', true);
 };
 
 csrv.Choices.prototype.fastModeDisable = function() {
   this.fastMode = false;
-  $('#fastmode').hide('fade');
+  $('#fastmode-on').prop('checked', false)
 };
 
 csrv.Choices.prototype.update = function(choices) {
@@ -120,33 +127,38 @@ csrv.Choices.prototype.handleAutoActions = function() {
   }
 
   if (this.fastMode) {
-    /* Give the player a little bit of notice when their opponent's turn ends */
-    if (csrv.game.run.server ||
-      (csrv.game.corp.clicks == 0 && csrv.game.runner.clicks == 0)) {
-    }
     if (this.phase == 'RunnerTurnAbilities' ||
         this.phase == 'CorpTurnAbilities' ||
+        this.phase == 'ApproachIce_2_1' ||
         this.phase == 'ApproachServer_4_1' ||
         this.phase == 'ApproachServer_4_3') {
-      $('#choices').empty();
-      $('#choices').append($('<h3>', {text: 'Skipping rez/abilities'}));
-      csrv.sendChoice(null);
-      return true;
+      if (this.allChoices.length == 0 || $('#fastmode-full').prop('checked')) {
+        $('#choices').empty();
+        $('#choice-title').empty();
+        $('#choice-title').append($('<h2>', {text: 'Skipping rez/abilities'}));
+        csrv.sendChoice(null);
+        return true;
+      } else {
+        return false;
+      }
     } else if (this.phase == 'AccessCard') {
       /* Runner won't have a chance to see the card if we skip */
       return false;
     } else if (this.allChoices.length == 0) {
       csrv.sendChoice(null);
       return true;
-    };
+    }
   }
   return false;
-}
+};
 
 csrv.Choices.prototype.render = function() {
   var choiceDiv = $('#choices');
+  var choiceTitle = $('#choice-title');
   choiceDiv.empty();
-  choiceDiv.append($('<h3>', {text: this.description.replace(/([A-Z])/g, ' $1')}));
+  choiceTitle.empty()
+  choiceTitle.append(
+      $('<h2>', {text: this.description.replace(/([A-Z])/g, ' $1')}));
 
   for (var i = 0; i < this.globalChoices.length; i++) {
     choiceDiv.append(this.globalChoices[i].asLink());
@@ -171,8 +183,18 @@ csrv.Choices.prototype.render = function() {
       }
     }
   }
+  if (this.player == 'runner') {
+    $('#runner_info').addClass('active-player');
+    $('#corp_info').removeClass('active-player');
+  } else {
+    $('#corp_info').addClass('active-player');
+    $('#runner_info').removeClass('active-player');
+  }
   if (this.player != csrv.side) {
-    choiceDiv.append($('<h3>').text('Waiting for other player...'));
+    choiceDiv.append(
+        $('<h3>', {'class': 'waiting'}).text(
+          'Waiting for other player ').append(
+            $('<img>', {src: '/static/images/spinner.gif'})));
   }
 };
 
@@ -359,6 +381,7 @@ csrv.ChoiceHandler = function(choice, responseType) {
 
 csrv.ChoiceHandler.prototype.clearChoices = function() {
   $('#choices').empty();
+  $('#choice-title').empty();
 };
 
 csrv.ChoiceHandler.prototype.setServerChoice = function(server) {
@@ -375,7 +398,8 @@ csrv.ChoiceHandler.prototype.showServerChoices = function(options) {
     options || {});
 
   var choiceDiv = $('#choices');
-  choiceDiv.append($('<h3>', {text: 'Choose a server'}));
+  var choiceTitle = $('#choice-title');
+  choiceTitle.append($('<h2>', {text: 'Choose a server'}));
   var servers = [];
   if (options['centrals']) {
     servers = [
@@ -525,6 +549,7 @@ csrv.InstallProgramResponseHandler.prototype.checkResponse = function() {
 
 csrv.InstallProgramResponseHandler.prototype.showHostChoices = function(hosts) {
   var choiceDiv = $('#choices');
+  var choiceTitle = $('#choice-title');
   var self = this;
   this.hostChoices = []
   csrv.destroyTooltip();
@@ -541,7 +566,7 @@ csrv.InstallProgramResponseHandler.prototype.showHostChoices = function(hosts) {
   }
   csrv.createTooltip();
 
-  choiceDiv.append($('<h3>', {text: 'Choose a host'}));
+  choiceTitle.append($('<h2>', {text: 'Choose a host'}));
   var link = $('<a>', {href: '#', html: 'No host'});
   var choice = new csrv.ResponseChoice(
       'No host', this.setHostChoice.bind(this), null);
@@ -552,6 +577,7 @@ csrv.InstallProgramResponseHandler.prototype.showHostChoices = function(hosts) {
 csrv.InstallProgramResponseHandler.prototype.showTrashChoices =
     function(targets) {
   var choiceDiv = $('#choices');
+  var choiceTitle = $('#choice-title');
   csrv.destroyTooltip();
   /* need to give the option to unselect accidentally selected programs here **/
   /* also add a visual trash indicator to the selected card */
@@ -573,7 +599,7 @@ csrv.InstallProgramResponseHandler.prototype.showTrashChoices =
     }
   }
   csrv.createTooltip();
-  choiceDiv.append($('<h3>', {text: 'Choose to trash programs'}));
+  choiceTitle.append($('<h2>', {text: 'Choose to trash programs'}));
   var link = $('<a>', {href: '#', html: 'Done trashing'});
   var self = this;
   var choice = new csrv.ResponseChoice(
@@ -635,6 +661,7 @@ csrv.InstallHardwareResponseHandler.prototype.constructor =
 
 csrv.InstallHardwareResponseHandler.prototype.showHostChoices = function(hosts) {
   var choiceDiv = $('#choices');
+  var choiceTitle = $('#choice-title');
   var self = this;
   this.hostChoices = []
   csrv.destroyTooltip();
@@ -651,7 +678,7 @@ csrv.InstallHardwareResponseHandler.prototype.showHostChoices = function(hosts) 
   }
   csrv.createTooltip();
 
-  choiceDiv.append($('<h3>', {text: 'Choose a host'}));
+  choiceTitle.append($('<h2>', {text: 'Choose a host'}));
   var link = $('<a>', {href: '#', html: 'No host'});
   link.click(new csrv.ResponseChoice(self.setHostChoice, null));
   choiceDiv.append(link);
@@ -722,8 +749,9 @@ csrv.ForfeitAgendaResponseHandler.prototype.checkResponse = function() {
 csrv.ForfeitAgendaResponseHandler.prototype.showForfeitChoices =
     function(agendas) {
   var choiceDiv = $('#choices');
+  var choiceTitle = $('#choice-title');
   console.log(agendas);
-  choiceDiv.append($('<h3>', {text: 'Choose an agenda'}));
+  choiceTitle.append($('<h2>', {text: 'Choose an agenda'}));
   this.forfeitChoices = []
   csrv.destroyTooltip();
   for (var i = 0; i < agendas.length; i++) {

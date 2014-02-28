@@ -20,7 +20,7 @@ class InstallCard01012(actions.InstallProgram):
 
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
     if not response or not response.host:
-      raise errors.InvalidResponseError(
+      raise errors.InvalidResponse(
           'You must choose a host for Card01012.')
     actions.InstallProgram.resolve(
         self, response, ignore_clicks=ignore_clicks,

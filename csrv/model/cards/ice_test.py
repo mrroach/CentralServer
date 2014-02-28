@@ -28,7 +28,7 @@ class IceTest(test_base.TestBase):
     mod.remove()
     self.assertEqual(4, self.card.cost)
 
-  def test_cost_honors_global_modifiers(self):
+  def test_cost_honors_server_modifiers(self):
     mod = modifiers.IceRezCostModifier(self.game, -1, server=self.server)
     self.assertEqual(3, self.card.cost)
     mod.remove()

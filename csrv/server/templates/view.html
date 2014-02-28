@@ -70,7 +70,13 @@
         <div class="agendas" title="Scored agenda points"></div>
       </div>
       <div id="messages"></div>
-      <div id="fastmode">Fast Mode Enabled</div>
+      <div id="fastmode">
+        <input type="checkbox" id="fastmode-on"> <label for="fastmode-on">
+          Skip rez/abilities windows</label><br>
+        &nbsp; <input type="checkbox" id="fastmode-full"> even when there are
+        abilities available<br>
+      </div>
+      <div id="choice-title"></div>
       <div id="choices"></div>
     </div>
     <div id="game">
@@ -98,10 +104,6 @@
     <div id="corp_hud">
       <div id="corp_hand"></div>
       <div id="corp_credits"></div>
-      <div id="options">
-        <input type="checkbox" id="opt_skip_abilities">
-        <label for="opt_skip_abilities">Skip abilities/rez phase</label>
-      </div>
     </div>
   {% end %}
 

@@ -107,10 +107,10 @@ class Card01026(program.Program):
     self.target = ice
 
   def interact_with_ice_actions(self):
-    actions = []
+    choices = []
     if self.game.run and self.game.run.current_ice() == self.target:
-      actions.append(BypassIce(self.game, self.player, card=self))
-    return (actions + [self._boost_strength_action] +
+      choices.append(BypassIce(self.game, self.player, card=self))
+    return (choices + [self._boost_strength_action] +
         [actions.BreakSentrySubroutine(
             self.game, self.player, self, sub, credits=1)
          for sub in self.game.run.current_ice().subroutines])

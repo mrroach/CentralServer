@@ -48,8 +48,13 @@ class BasePhase(game_object.GameObject):
 
   __metaclass__ = PhaseMeta
 
+  DESCRIPTION = None
   NULL_OK = True
   NULL_CHOICE = 'Do nothing'
+
+  begin_event = None
+  event = None
+  end_event = None
 
   def __init__(self, game, player, both_players=True):
     game_object.GameObject.__init__(self, game)
@@ -73,9 +78,11 @@ class BasePhase(game_object.GameObject):
     self.begun = True
     self._ended = False
     if self.begin_event and not self._begin_event_emitted:
+      # pylint: disable=E1102
       self.trigger_event(self.begin_event(self.game, self.player))
       self._begin_event_emitted = True
     if not self._event_emitted and self.event:
+      # pylint: disable=E1102
       self.trigger_event(self.event(self.game, self.player))
       self._event_emitted = True
 
@@ -86,6 +93,7 @@ class BasePhase(game_object.GameObject):
     self.begun = False
     self._ended = True
     if not self._end_event_emitted and self.end_event:
+      # pylint: disable=E1102
       self.trigger_event(self.end_event(self.game, self.player))
     try:
       self.game.remove_phase(self)
@@ -151,97 +159,6 @@ class BasePhase(game_object.GameObject):
       self.resolve(None, None)
 
 
-class OldBasePhase(game_object.PlayerObject):
-  """Base timing phase."""
-
-  __metaclass__ = PhaseMeta
-
-  NULL_OK = True
-  NULL_CHOICE = 'Do nothing'
-
-  def __init__(self, game, player):
-    game_object.PlayerObject.__init__(self, game, player)
-    self.begun = False
-    self._ended = False
-    self._choices = None
-    self._event_emitted = False
-    self._begin_event_emitted = False
-    self._end_event_emitted = False
-
-  def __str__(self):
-    return self.__class__.__name__
-
-  def begin(self):
-    self.begun = True
-    self._ended = False
-    if self.begin_event and not self._begin_event_emitted:
-      self.trigger_event(self.begin_event(self.game, self.player))
-      self._begin_event_emitted = True
-    if not self._event_emitted and self.event:
-      self.trigger_event(self.event(self.game, self.player))
-      self._event_emitted = True
-
-  def choices(self, refresh=False):
-    """Gather the available choices for self phase.
-
-    Returns:
-      list<choice.Choice>
-    """
-    if not self._choices or refresh:
-      listeners = self.game.choice_providers_for(self.__class__)
-      self._choices = []
-      for listener, method in listeners:
-        for choice in getattr(listener, method)():
-          if choice.is_usable():
-            self._choices.append(choice)
-    return self._choices
-
-  def clear_choices(self):
-    """Clear the choices for self phase. Needed whenever game state changes."""
-    self._choices = None
-
-  def resolve(self, choice, parameters=None):
-    """Perform the given choice, and repeat self phase if more choices exist."""
-    if choice:
-      choice.resolve(parameters)
-      if self._ended:
-        # The choice somehow killed this phase.
-        self._choices = None
-        return
-      if not self.choices(refresh=True):
-        self.end_phase()
-    else:
-      if self.NULL_OK:
-        mandatory = [o for o in self.choices() if o.is_mandatory]
-        if mandatory:
-          # player has passed on all optional choices, mandatory ones must still
-          # be handled. probably need to catch self and stick to only mandatory
-          # choices from there on out
-          self._choices = mandatory
-        else:
-          self.end_phase()
-      elif self._choices:
-        raise errors.ChoiceRequiredError(
-            '%s: You must choose one of the options' % self)
-      else:
-        self.end_phase()
-
-  def end_immediately(self):
-    self._ended = True
-
-  def end_phase(self):
-    self.begun = False
-    self._ended = True
-    if not self._end_event_emitted and self.end_event:
-      self.trigger_event(self.end_event(self.game, self.player))
-    try:
-      self.game.remove_phase(self)
-      if self.game.run:
-        self.game.run.on_phase_end(self)
-    except ValueError:
-      pass
-
-
 class CorpGameSetup(BasePhase):
   """The corp draws a starting hand and credits."""
   NULL_CHOICE = 'Keep current hand.'
@@ -293,6 +210,7 @@ class CorpTurnAbilities(BasePhase):
   def resolve(self, choice, parameters=None):
     """Perform the given choice, and repeat self phase if more choices exist."""
     if not self._event_emitted and self.event:
+      # pylint: disable=E1102
       self.trigger_event(self.event(self.game, self.player))
       self._event_emitted = True
     if choice:

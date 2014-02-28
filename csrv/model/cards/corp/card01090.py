@@ -12,12 +12,12 @@ class LoseCredits(actions.Action):
 
   def __init__(self, game, player, card=None):
     cost_obj = cost.Cost(game, player, credits=3)
-    action.Action.__init__(self, game, player, card=card, cost=cost_obj)
+    actions.Action.__init__(self, game, player, card=card, cost=cost_obj)
     self._is_mandatory = True
     self.paid = False
 
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
-    action.Action.resolve(
+    actions.Action.resolve(
         self,
         ignore_clicks=ignore_clicks,
         ignore_all_costs=ignore_all_costs)
@@ -32,7 +32,7 @@ class EndTheRun(actions.Action):
   DESCRIPTION = 'End the run'
 
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
-    action.Action.resolve(
+    actions.Action.resolve(
         self,
         ignore_clicks=ignore_clicks,
         ignore_all_costs=ignore_all_costs)
