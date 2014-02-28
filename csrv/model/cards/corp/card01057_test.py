@@ -37,6 +37,7 @@ class Card01057Test(test_base.TestBase):
     access = self.game.current_phase().choices()[0]
     self.game.resolve_current_phase(access, None)  # choose to access
     self.assertTrue(self.game.current_phase().begun)
+    # pylint: disable=E1101
     yes_action = self.game.current_phase().yes_action
     self.game.resolve_current_phase(yes_action, None)
 

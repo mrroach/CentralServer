@@ -34,6 +34,7 @@ class TestCard01039(test_base.TestBase):
     self.assertIsInstance(self.game.current_phase(),
                           card01039.DecideInstallOther)
     phase = self.game.current_phase()
+    # pylint: disable=E1101
     self.game.resolve_current_phase(phase.yes_action, None)
     self.assertEqual(1, self.game.runner.credits.value)
 

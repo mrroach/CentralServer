@@ -24,6 +24,7 @@ class TestCard01030(test_base.TestBase):
                   self.game.current_phase().choices())
     self.game.resolve_current_phase(self.card._prevent_meat_damage, None)
     self.assertEqual(self.runner.heap, self.card.location)
+    # pylint: disable=E1101
     self.assertEqual(1, self.game.current_phase().damage)
 
   def test_remove_tags(self):

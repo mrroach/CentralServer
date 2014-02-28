@@ -24,6 +24,7 @@ class TestCard01045(test_base.TestBase):
     self.assertIn(self.card._prevent_net_damage,
                   self.game.current_phase().choices())
     self.game.resolve_current_phase(self.card._prevent_net_damage, None)
+    # pylint: disable=E1101
     self.assertEqual(1, self.game.current_phase().damage)
     self.assertEqual(0, len(self.game.current_phase().choices()))
 

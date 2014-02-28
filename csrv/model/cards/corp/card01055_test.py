@@ -46,6 +46,7 @@ class Card01055Test(test_base.TestBase):
 
   def test_use_install_ice_ability(self):
     self.install_and_score()
+    # pylint: disable=E1101
     self.game.resolve_current_phase(
         self.game.current_phase().yes_action, None)
     self.assertIsInstance(
@@ -74,6 +75,7 @@ class Card01055Test(test_base.TestBase):
     self.assertIsInstance(
         self.game.current_phase(),
         card01055.DecideCard01055)
+    # pylint: disable=E1101
     self.game.resolve_current_phase(
         self.game.current_phase().no_action, None)
     self.assertIsInstance(
