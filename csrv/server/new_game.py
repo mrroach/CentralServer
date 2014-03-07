@@ -22,6 +22,7 @@ class NewGameHandler(tornado.web.RequestHandler):
       self.redirect('/game/%s/%s/deck' % (game_id, side))
 
   def get_template_namesspace(self):
+    # pylint: disable=E1101
     default = tornado.web.RequestHandler.get_template_namespace(self)
     default['errors'] = []
     return default

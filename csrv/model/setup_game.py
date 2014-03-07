@@ -49,7 +49,7 @@ def play(game_obj=None):
     try:
       phase = g.current_phase()
       with open('game_state.json', 'w') as json_out:
-        json_out.write(json_serializer.serialize_game_corp(g))
+        json_out.write(json_serializer.JsonSerializer(g).serialize_game_corp())
 
       player = phase.player
       if player == g.corp:

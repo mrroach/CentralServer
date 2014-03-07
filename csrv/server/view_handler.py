@@ -21,70 +21,13 @@ class ViewHandler(tornado.web.RequestHandler):
                   game_id=game_id, side=side, xsrf_token=self.xsrf_token)
 
 
-class GameStateHandler(tornado.web.RequestHandler):
-  def get(self, game_id, side):
-    game_data = data.Data.get(game_id)
-    if side == 'corp':
-      json = json_serializer.serialize_game_corp(game_data.game)
-      self.set_header('Content-Type', 'application/json')
-      self.write(json)
-    else:
-      json = json_serializer.serialize_game_runner(game_data.game)
-      self.set_header('Content-Type', 'application/json')
-      self.write(json)
-
-
-class ChoicesHandler(tornado.web.RequestHandler):
-  """Serialize and deserialize game choices."""
-
-  def get(self, game_id, side):
-    game_data = data.Data.get(game_id)
-    assert(game_data)
-    assert(game_data.game)
-    phase = game_data.game.current_phase()
-    if side == str(phase.player):
-      json_data = json_serializer.serialize_choices(game_data.game)
-    else:
-      json_data = json_serializer.serialize_choices(
-          game_data.game, secret=True)
-    self.set_header('Content-Type', 'application/json')
-    self.write(json_data)
-
-  def post(self, game_id, side):
-    game_data = data.Data.get(game_id)
-    assert(game_data)
-    assert(game_data.game)
-    choice_data = json.loads(self.request.body)
-    phase = game_data.game.current_phase()
-    if side == str(phase.player):
-      index = choice_data['index']
-      if index is None:
-        choice = None
-        response = None
-      else:
-        choice = phase.choices()[index]
-        response = json_serializer.deserialize_response(
-            game_data.game, choice_data['response'])
-      game_data.game.resolve_current_phase(choice, response)
-      data.Data.dump(game_id)
-    return self.get(game_id, side)
-
-
-class PickleHandler(tornado.web.RequestHandler):
-  """Return a pickled game object."""
-
-  def get(self, game_id):
-    game_data = data.Data.get(game_id)
-    self.set_header('Content-Type', 'application/octet-stream')
-    self.set_header('Content-Disposition', 'inline; filename="game.p"')
-    self.write(pickle.dumps(game_data.game))
-
-
 class GameSocketHandler(websocket.WebSocketHandler):
   def open(self, game_id, side):
     self.side = side
     self.game_id = game_id
     self.game_data = data.Data.get(game_id)
+    self.serializer = json_serializer.JsonSerializer(self.game_data.game)
+
     for handler in self.game_data.handlers:
       if handler.side == self.side:
         print 'someone else is already logged in as %s' % side
@@ -139,9 +82,9 @@ class GameSocketHandler(websocket.WebSocketHandler):
           len(self.game_data.game.current_phase().choices()))
 
     if self.side == 'corp':
-      json_data = json_serializer.serialize_game_corp(self.game_data.game)
+      json_data = self.serializer.serialize_game_corp()
     else:
-      json_data = json_serializer.serialize_game_runner(self.game_data.game)
+      json_data = self.serializer.serialize_game_runner()
     self.write_message(json_data)
 
     if self.log_position < len(self.game_data.game._log):
