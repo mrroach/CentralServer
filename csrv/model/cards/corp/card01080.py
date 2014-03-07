@@ -27,3 +27,8 @@ class Card01080(identity.Identity):
 
   def build_actions(self):
     identity.Identity.build_actions(self)
+
+  @property
+  def credits(self):
+    return self.pool.value
+
