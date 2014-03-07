@@ -148,7 +148,7 @@ class Game(object):
 
   def expose_card(self, card):
     """Add a card to the list of exposed ids."""
-    # This is going to have to get more complicated to support zaibatsu
+    # This is going to have to get more complicated to support prevention
     self.exposed_ids.add(card.game_id)
 
   def new_id(self):

@@ -189,6 +189,10 @@ class CardBase(game_object.PlayerObject):
   def rez_cost(self):
     return self.COST
 
+  @property
+  def is_exposed(self):
+    return self.game_id in self.game.exposed_ids
+
   def advance(self):
     self.advancement_tokens += 1
 

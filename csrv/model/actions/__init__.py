@@ -14,6 +14,7 @@ from csrv.model.actions.continue_run import ContinueRun
 from csrv.model.actions.discard import Discard
 from csrv.model.actions.draw_from_rnd import DrawFromRnD
 from csrv.model.actions.draw_from_stack import DrawFromStack
+from csrv.model.actions.expose_card import ExposeCard
 from csrv.model.actions.gain_a_credit import GainACredit
 from csrv.model.actions.install_agenda_asset import InstallAgendaAsset
 from csrv.model.actions.install_resource import InstallResource
