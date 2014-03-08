@@ -151,12 +151,11 @@ class JsonSerializer(object):
         'identity': self.serialize_minimal(runner.identity),
         'grip': [self.serialize_minimal(c, hidden=hidden)
                  for c in runner.grip.cards],
-        'heap': [self.serialize_minimal(c, hidden=hidden)
+        'heap': [self.serialize_minimal(c, hidden=False)
                  for c in runner.heap.cards],
         'stack': [self.serialize_minimal(c, hidden=hidden) for c in
                   sorted(runner.stack.cards, key=lambda x: (x.SET, x.NUMBER))],
-        'rig': [self.serialize_card(c, hidden=hidden)
-                for c in runner.rig.cards],
+        'rig': [self.serialize_card(c, hidden=False) for c in runner.rig.cards],
         'free_memory': runner.free_memory,
     }
 

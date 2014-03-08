@@ -7,12 +7,12 @@ from csrv.model import timing_phases
 
 class Card01028RunAction(actions.MakeARunAction):
 
-  def __init__(self, game, player, card01028):
-    actions.MakeARunAction.__init__(self, game, player, game.corp.archives)
-    self.card01028 = card01028
+  def __init__(self, game, player, card=None):
+    actions.MakeARunAction.__init__(
+        self, game, player, card=card, server=game.corp.archives)
 
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
-    self.card01028.setup_card01028()
+    self.card.setup_card01028()
     actions.MakeARunAction.resolve(
         self, response, ignore_clicks=ignore_clicks,
         ignore_all_costs=ignore_all_costs)
@@ -44,7 +44,7 @@ class Card01028(program.Program):
     program.Program.build_actions(self)
 
   def card01028_actions(self):
-    return [Card01028RunAction(self.game, self.player, self)]
+    return [Card01028RunAction(self.game, self.player, card=self)]
 
   def setup_card01028(self):
     self.game.register_listener(events.ApproachServer_4_4, self)
