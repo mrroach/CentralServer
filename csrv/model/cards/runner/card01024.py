@@ -35,4 +35,5 @@ class Card01024(hardware.Hardware):
     self._memory_mod.remove()
 
   def on_successful_run(self, sender, event):
+    self.log('The runner gains 1[Credit] from Card01024')
     self.game.runner.credits.gain(1)

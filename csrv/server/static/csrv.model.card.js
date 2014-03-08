@@ -89,7 +89,7 @@ csrv.Card.prototype.removeChoice = function(choice) {
   }
   if (this.choices.length == 0 && this.div) {
     this.unhilight();
-    this.div.attr('title', null);
+    this.div.qtip('disable')
     this.div.unbind('dblclick');
   }
 };
@@ -104,11 +104,17 @@ csrv.Card.prototype.clearChoices = function() {
 
 csrv.Card.prototype.addDoubleClickHandler = function() {
   var choice = this.choices[0];
-  this.div.attr('title', null);
-  this.div.attr('title', choice.descriptionHtml());
-  this.div[0].title = choice.descriptionHtml();
-  saveDiv = this.div
+  this.div.qtip({
+    content: choice.descriptionHtml(),
+    style: {classes: 'qtip-tipsy'},
+    position: {
+      target: 'mouse',
+      adjust: {x: 10, y: 10}
+    }
+  });
+  var self = this;
   this.div.dblclick(function() {
+    self.div.qtip('hide');
     choice.resolve();
   });
 };

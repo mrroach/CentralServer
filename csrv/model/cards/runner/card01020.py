@@ -27,6 +27,7 @@ class ChooseUnrezzedIce(timing_phases.BasePhase):
 
 class ForceRezAction(actions.Action):
   """Force the corp to rez or trash ice."""
+  DESCRIPTION = 'Force the corp to either rez this ice or trash it'
 
   def resolve(self, response=None, ignore_clicks=False, ignore_all_costs=False):
     actions.Action.resolve(self, response,
@@ -39,7 +40,7 @@ class ForceRezAction(actions.Action):
 class RezOrTrash(timing_phases.BasePhase):
   """Decide whether to rez ice or trash it."""
   DESCRIPTION = 'Decide whether to rez ice or trash it.'
-  DEFAULT = 'Trash the ice'
+  NULL_CHOICE = 'Trash the ice'
 
   def __init__(self, game, player, ice):
     timing_phases.BasePhase.__init__(self, game, player, both_players=False)

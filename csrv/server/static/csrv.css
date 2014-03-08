@@ -473,6 +473,27 @@ div.trash, div.rez {
   margin:auto;
 }
 
+.qtip img, .context-menu-item img {
+  width: 14px;
+}
+
+.context-menu-root {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 0 solid transparent;
+}
+
+.context-menu-list, .context-menu-item {
+  background: rgba(0, 0, 0, .87);
+  background-color: none;
+  font-size: 11px;
+  font-family: 'Lucida Grande', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  line-height: 16px;
+}
+
 #servers .server_ice .card .rez img {
   transform:rotate(90deg);
   -webkit-transform:rotate(90deg); /* Safari */
